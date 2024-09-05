@@ -81,22 +81,22 @@ public class DistanceMeasure {
     int secondPessoaPosition = getPessoaPosition(secondPessoa);
     final int TOTAL_ATRIBUTOS = 11;
 
-    if (!(firstPessoa.getHobby().equals(secondPessoa.getHobby()))) {
+    if (!firstPessoa.getHobby().equals(secondPessoa.getHobby())) {
       sumDistances++;
     }
-    if (!(firstPessoa.getEstadoCivil().equals(secondPessoa.getEstadoCivil()))) {
+    if (!firstPessoa.getEstadoCivil().equals(secondPessoa.getEstadoCivil())) {
       sumDistances++;
     }
-    if (!(firstPessoa.getMoradia().equals(secondPessoa.getMoradia()))) {
+    if (!firstPessoa.getMoradia().equals(secondPessoa.getMoradia())) {
       sumDistances++;
     }
-    if (!(firstPessoa.getEscolaridade().equals(secondPessoa.getEscolaridade()))) {
+    if (!firstPessoa.getEscolaridade().equals(secondPessoa.getEscolaridade())) {
       sumDistances++;
     }
-    if (!(firstPessoa.getGenero().equals(secondPessoa.getGenero()))) {
+    if (!firstPessoa.getGenero().equals(secondPessoa.getGenero())) {
       sumDistances++;
     }
-    if (!(firstPessoa.getNaturalidade().equalsIgnoreCase(secondPessoa.getNaturalidade()))) {
+    if (!firstPessoa.getNaturalidade().equalsIgnoreCase(secondPessoa.getNaturalidade())) {
       sumDistances++;
     }
     if (!(firstPessoa.getFeliz() == secondPessoa.getFeliz())) {
@@ -127,12 +127,7 @@ public class DistanceMeasure {
   }
 
   public Float[] calcDistanceVector(Pessoa pessoa) {
-    int qtdePessoasDiferente = 0;
-    for (Pessoa p : pessoas) {
-      if (!pessoa.equals(p)) {
-        qtdePessoasDiferente++;
-      }
-    }
+    int qtdePessoasDiferente = calcQtdePessoasDiferentes(pessoa);
 
     Float[] distanceVector = new Float[qtdePessoasDiferente];
     int i = 0;
@@ -144,6 +139,16 @@ public class DistanceMeasure {
     }
 
     return distanceVector;
+  }
+
+  private int calcQtdePessoasDiferentes(Pessoa pessoa){
+    int qtdePessoasDiferente = 0;
+    for (Pessoa p : pessoas) {
+      if (!pessoa.equals(p)) {
+        qtdePessoasDiferente++;
+      }
+    }
+    return qtdePessoasDiferente;
   }
 
   public Float[][] calcDistanceMatrix() {

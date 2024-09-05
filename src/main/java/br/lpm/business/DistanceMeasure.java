@@ -117,6 +117,25 @@ public class DistanceMeasure {
         return distanceVector;
     }
 
+    public Float[][] calcDistanceMatrix() {
+       int row = dataset.size();
+       int column = row;
+       Float[][] matrizDistancias = new Float[row][column];
+       for (int i =0 ; i < row ; i++){
+        for (int j = i; j < column; j++){
+            if (i == j){
+                matrizDistancias[i][j] = (float)0;
+            }
+            if (j > i){
+                matrizDistancias[i][j] = calcDistance(pessoas[i],pessoas[j]);
+            }
+            else {
+                matrizDistancias[i][j] = matrizDistancias[j][i];
+            }
+        }
+       } 
+       return matrizDistancias;
+    }
     public Pessoa[] getSimilar(Pessoa pessoa , int n){
         
         Float[] distanceVector = ordenaDescrescente(calcDistanceVector(pessoa));

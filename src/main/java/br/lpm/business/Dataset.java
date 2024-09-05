@@ -69,7 +69,10 @@ public class Dataset {
   }
 
   public Pessoa[] getAll(){
-    return pessoas;
+    if (pessoas != null){
+      return pessoas;
+    }
+    return null;
   }
 
   public int size() {

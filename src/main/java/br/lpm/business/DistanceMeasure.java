@@ -185,7 +185,7 @@ public class DistanceMeasure {
   }
 
   private Pessoa foundPessoa(Pessoa pessoa, Float distance) {
-    float delta = 0.0001f;
+    float delta = 0.001f;
     for (int i = 0; i < dataset.size(); i++) {
       if (Math.abs(distance - calcDistance(pessoa, pessoas[i])) < delta) {
         if (!pessoa.equals(pessoas[i])) {

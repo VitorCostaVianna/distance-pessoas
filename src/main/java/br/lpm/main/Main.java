@@ -175,45 +175,9 @@ public class Main {
     }
   }
 
-  private static void exibirEstatisticas() {
-    String estatisticas =
-        "Estatísticas:\n"
-            + "Altura Máxima: "
-            + dataset.maxAltura()
-            + " m\n"
-            + "Altura Média: "
-            + dataset.avgAltura()
-            + " m\n"
-            + "Altura Mínima: "
-            + dataset.minAltura()
-            + " m\n"
-            + "Peso Máximo: "
-            + dataset.maxPeso()
-            + " kg\n"
-            + "Peso Mínimo: "
-            + dataset.minPeso()
-            + " kg\n"
-            + "Peso Médio: "
-            + dataset.avgPeso()
-            + " kg\n"
-            + "Porcentagem de Adultos: "
-            + dataset.percentAdult()
-            + "%\n"
-            + "Moda da Moradia: "
-            + dataset.modeMoradia()
-            + "\n"
-            + "Moda da Escolaridade: "
-            + dataset.modeEscolaridade()
-            + "\n"
-            + "Moda do Estado Civil: "
-            + dataset.modeEstadoCivil()
-            + "\n"
-            + "Porcentagem de Pessoas Felizes: "
-            + dataset.percentFeliz()
-            + "%";
-
+  private static void exibirEstatisticas() 
     JOptionPane.showMessageDialog(
-        null, estatisticas, "Estatísticas", JOptionPane.INFORMATION_MESSAGE);
+        null, dataset , "Estatísticas", JOptionPane.INFORMATION_MESSAGE);
   }
 
   public static void histogramaFormacaoAcadêmica() {

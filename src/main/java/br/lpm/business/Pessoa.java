@@ -216,30 +216,22 @@ public class Pessoa {
 
   @Override
   public String toString() {
-    return "\n -----Dados da Pessoa-----\n"
-        + " \n nome: "
-        + nome
-        + ", \n Data De Nascimento: "
-        + dataDeNascimento.format(fmt)
-        + ", \n Genero: "
-        + genero
-        + ", \n Altura: "
-        + altura
-        + ", \n Peso: "
-        + peso
-        + ", \n Renda: "
-        + renda
-        + ", \n Naturalidade: "
-        + naturalidade
-        + ", \n Hobby: "
-        + hobby
-        + ", \n Estado Civil: "
-        + estadoCivil
-        + ", \n Escolaridade: "
-        + escolaridade
-        + ", \n "
-        + ImprimeFeliz()
-        + ", \n Moradia: "
-        + moradia;
+      StringBuilder sb = new StringBuilder();
+      sb.append("\n -----Dados da Pessoa-----\n")
+        .append(" \n nome: ").append(nome)
+        .append(", \n Data De Nascimento: ").append(dataDeNascimento.format(fmt))
+        .append(", \n Genero: ").append(genero)
+        .append(", \n Altura: ").append(altura)
+        .append(", \n Peso: ").append(peso)
+        .append(", \n Renda: ").append(renda)
+        .append(", \n Naturalidade: ").append(naturalidade)
+        .append(", \n Hobby: ").append(hobby)
+        .append(", \n Estado Civil: ").append(estadoCivil)
+        .append(", \n Escolaridade: ").append(escolaridade)
+        .append(", \n ").append(ImprimeFeliz())
+        .append(", \n Moradia: ").append(moradia);
+  
+      return sb.toString();
   }
+  
 }

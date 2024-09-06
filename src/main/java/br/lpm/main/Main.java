@@ -1,6 +1,7 @@
 package br.lpm.main;
 
 import br.lpm.business.Dataset;
+import br.lpm.business.DistanceMeasure;
 import br.lpm.business.Escolaridade;
 import br.lpm.business.EstadoCivil;
 import br.lpm.business.Genero;
@@ -21,18 +22,19 @@ import org.jfree.data.general.DefaultPieDataset;
 
 public class Main {
 
-  public static Dataset dataset = new Dataset();
-
+  public static Dataset dataset;
+  public static DistanceMeasure distance;
   public static void main(String[] args) {
-    
     Locale.setDefault(Locale.US);
+
+    Pessoa pessoaPrincipal = new Pessoa();
+    cadastrarDataset();
+    cadastrarPessoa(pessoaPrincipal);
     ShowMenu();
   }
 
   public static void ShowMenu() {
     String[] options = {
-      "Cadastrar Pessoa",
-      "Remover Pessoa",
       "Pesquisar Pessoa",
       "Estatisticas",
       "Exibir Histograma de Formação Acadêmica",
@@ -56,34 +58,47 @@ public class Main {
 
       switch (escolha) {
         case 0:
-          cadastrarPessoas();
-          break;
-        case 1:
-          removerPessoa();
-          break;
-        case 2:
           pesquisarPessoa();
           break;
-        case 3:
+        case 1:
           exibirEstatisticas();
           break;
-        case 4:
+        case 2:
           histogramaFormacaoAcadêmica();
           break;
-        case 5:
+        case 3:
           pieEstadoCivil();
           break;
-        case 6:
+        case 4:
           JOptionPane.showMessageDialog(null, "Saindo do programa.");
           break;
         default:
           JOptionPane.showMessageDialog(null, "Opção inválida!");
           break;
       }
-    } while (escolha != 6);
+    } while (escolha != 4);
   }
 
-  public static void cadastrarPessoas() {
+  private static void cadastrarDataset() {
+      dataset = new Dataset();
+      String qtdePessoasDatasetAux = JOptionPane.showInputDialog("Digite a quantidade de pessoas que deseja cadastrar na base de dados: ");
+      int qtdePessoasDataset = 0;
+      if (qtdePessoasDatasetAux != null) {
+        qtdePessoasDataset = Integer.parseInt(qtdePessoasDatasetAux);
+      }
+      else {
+        while (qtdePessoasDatasetAux == null) {
+          qtdePessoasDatasetAux = JOptionPane.showInputDialog("Digite um valor válido: ");
+        }
+        qtdePessoasDataset = Integer.parseInt(qtdePessoasDatasetAux);
+      }
+      for (int i= 0; i < qtdePessoasDataset;  i++){
+        cadastrarPessoa();
+      }
+
+    }
+  
+  public static void cadastrarPessoa() {
     DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     String nome = JOptionPane.showInputDialog("Digite seu nome: ");
@@ -155,11 +170,81 @@ public class Main {
     JOptionPane.showMessageDialog(
         null, pessoa, "Pessoa Cadastrada", JOptionPane.INFORMATION_MESSAGE);
   }
+  
+  public static void cadastrarPessoa(Pessoa newPessoa) {
+    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-  public static void removerPessoa() {
-    String pessoa = JOptionPane.showInputDialog("Digite o nome da pessoa que deseja remover: ");
-    dataset.removePessoaByName(pessoa);
-    JOptionPane.showMessageDialog(null, null, "Pessoa removida", 0);
+    String nome = JOptionPane.showInputDialog("Digite seu nome: ");
+
+    String dataDeAniversarioAux =
+        JOptionPane.showInputDialog("Digite a data de aniversário (dd/MM/yyyy): ");
+        LocalDate dataDeAniversario = null;
+    if (dataDeAniversarioAux != null) {
+      dataDeAniversario = LocalDate.parse(dataDeAniversarioAux, fmt);
+    }
+    else {
+      JOptionPane.showMessageDialog(null, "Nenhuma data foi inserida! ");
+    }
+
+    Genero genero =
+        Genero.valueOf(
+            JOptionPane.showInputDialog(
+                "Digite o gênero (MASCULINO, FEMININO, NAO_BINARIO, NAO_RESPONDER): "));
+
+    Float altura = Float.parseFloat(JOptionPane.showInputDialog("Digite a altura (em metros): "));
+
+    int peso = Integer.parseInt(JOptionPane.showInputDialog("Digite o peso (em kg): "));
+
+    float renda = Float.parseFloat(JOptionPane.showInputDialog("Digite a renda: "));
+
+    String naturalidade = JOptionPane.showInputDialog("Digite a naturalidade: ");
+
+    Hobby hobby =
+        Hobby.valueOf(
+            JOptionPane.showInputDialog(
+                "Digite o hobby [ARTE, ESPORTE, CINEMA, LIVRO, MÚSICA, CULINÁRIA, GAME, NENHUM]:"
+                    + " ").toUpperCase());
+
+    EstadoCivil estadoCivil =
+        EstadoCivil.valueOf(
+            JOptionPane.showInputDialog(
+                "Digite o estado civil (SOLTEIRO, CASADO, DIVORCIADO, VIUVO, SEPARADO): ").toUpperCase());
+
+    Escolaridade escolaridade =
+        Escolaridade.valueOf(
+            JOptionPane.showInputDialog(
+                    "Digite a escolaridade (FUNDAMENTAL, MEDIO, SUPERIOR, POS_GRADUACAO, NENHUMA):"
+                        + " ")
+                .toUpperCase());
+
+    boolean feliz =
+        Boolean.parseBoolean(JOptionPane.showInputDialog("Você está feliz? (true/false): "));
+
+    Moradia moradia =
+        Moradia.valueOf(
+            JOptionPane.showInputDialog(
+                "Digite o tipo de moradia [COM_FAMILIA, ALUGUEL, CASA_PROPRIA]: ").toUpperCase());
+
+    newPessoa =
+        new Pessoa(
+            nome,
+            dataDeAniversario,
+            genero,
+            altura,
+            peso,
+            renda,
+            naturalidade,
+            hobby,
+            estadoCivil,
+            escolaridade,
+            feliz,
+            moradia);
+    dataset.addPessoa(newPessoa);
+    distance = new DistanceMeasure(dataset);
+    JOptionPane.showMessageDialog(
+        null, newPessoa, "Pessoa Cadastrada", JOptionPane.INFORMATION_MESSAGE);
+    exibePessoasSimilares(newPessoa);
+
   }
 
   public static void pesquisarPessoa() {
@@ -175,9 +260,9 @@ public class Main {
     }
   }
 
-  private static void exibirEstatisticas() 
+  private static void exibirEstatisticas(){
     JOptionPane.showMessageDialog(
-        null, dataset , "Estatísticas", JOptionPane.INFORMATION_MESSAGE);
+        null, dataset, "Estatísticas", JOptionPane.INFORMATION_MESSAGE);
   }
 
   public static void histogramaFormacaoAcadêmica() {
@@ -250,4 +335,16 @@ public class Main {
     JOptionPane.showMessageDialog(
         null, frameGrafico.getContentPane(), "Pie Chart", JOptionPane.PLAIN_MESSAGE);
   }
+
+  private static void exibePessoasSimilares(Pessoa pessoa) {
+    Pessoa[] pessoasSimilares = distance.getSimilar(pessoa, 3);
+
+    StringBuilder sb = new StringBuilder();
+    sb.append(pessoasSimilares[0]).append("\n")
+            .append(pessoasSimilares[1]).append("\n")
+            .append(pessoasSimilares[2]);
+
+    JOptionPane.showMessageDialog(null, sb.toString(), "Pessoas Similares", JOptionPane.INFORMATION_MESSAGE);
+  }
+
 }

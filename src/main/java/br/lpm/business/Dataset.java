@@ -25,7 +25,7 @@ public class Dataset {
         }
         pessoas[size() - 1] = null;
         numPessoasVetor--;
-        break; 
+        break;
       }
     }
   }
@@ -36,9 +36,9 @@ public class Dataset {
         for (int p = j; p < size() - 1; p++) {
           pessoas[p] = pessoas[p + 1];
         }
-        pessoas[size() - 1] = null; 
-        numPessoasVetor--; 
-        break; 
+        pessoas[size() - 1] = null;
+        numPessoasVetor--;
+        break;
       }
     }
   }
@@ -60,16 +60,16 @@ public class Dataset {
     }
     return null;
   }
-  
+
   public void removeAll() {
     for (int j = 0; j < size(); j++) {
       pessoas[j] = null;
     }
-    numPessoasVetor = 0; 
+    numPessoasVetor = 0;
   }
 
-  public Pessoa[] getAll(){
-    if (pessoas != null){
+  public Pessoa[] getAll() {
+    if (pessoas != null) {
       return pessoas;
     }
     return null;
@@ -134,9 +134,7 @@ public class Dataset {
     }
     return -1;
   }
-  
 
-  
   public float maxAltura() {
     if (size() > 0 && pessoas[0] != null) {
       float maxAltura;
@@ -217,19 +215,19 @@ public class Dataset {
     return sum / (float) total;
   }
 
-  public float percentAdult(){
+  public float percentAdult() {
     int sum = 0;
-    int total =0;
-    for (int j = 0; j < size(); j++){
+    int total = 0;
+    for (int j = 0; j < size(); j++) {
       if (pessoas[j] != null && pessoas[j].getDataDeNascimento() != null) {
         total++;
-        if (pessoas[j].calculaIdade() >=  18) {
+        if (pessoas[j].calculaIdade() >= 18) {
           sum++;
         }
+      }
     }
+    return (sum / (float) total) * 100;
   }
-    return (sum/(float)total) * 100;
-}
 
   public float percentEstadoCivil(EstadoCivil estadoCivil) {
     int sum = 0;
@@ -376,24 +374,47 @@ public class Dataset {
       }
       total++;
     }
-    return ((float)isFeliz / total) * 100;
+    return ((float) isFeliz / total) * 100;
   }
 
   @Override
   public String toString() {
-      StringBuilder sb = new StringBuilder();
-      sb.append("Estatísticas:\n")
-        .append("Altura Máxima: " + maxAltura() + " m\n").append(maxAltura()).append(" m\n")
-        .append("Altura Média: ").append(avgAltura()).append(" m\n")
-        .append("Altura Mínima: ").append(minAltura()).append(" m\n")
-        .append("Peso Máximo: ").append(maxPeso()).append(" kg\n")
-        .append("Peso Mínimo: ").append(minPeso()).append(" kg\n")
-        .append("Peso Médio: ").append(avgPeso()).append(" kg\n")
-        .append("Porcentagem de Adultos: ").append(percentAdult()).append("%\n")
-        .append("Moda da Moradia: ").append(modeMoradia()).append("\n")
-        .append("Moda da Escolaridade: ").append(modeEscolaridade()).append("\n")
-        .append("Moda do Estado Civil: ").append(modeEstadoCivil()).append("\n")
-        .append("Porcentagem de Pessoas Felizes: ").append(percentFeliz()).append("%\n");
-  
-      return sb.toString();
+    StringBuilder sb = new StringBuilder();
+    sb.append("Estatísticas:\n")
+        .append("Altura Máxima: " + maxAltura() + " m\n")
+        .append(maxAltura())
+        .append(" m\n")
+        .append("Altura Média: ")
+        .append(avgAltura())
+        .append(" m\n")
+        .append("Altura Mínima: ")
+        .append(minAltura())
+        .append(" m\n")
+        .append("Peso Máximo: ")
+        .append(maxPeso())
+        .append(" kg\n")
+        .append("Peso Mínimo: ")
+        .append(minPeso())
+        .append(" kg\n")
+        .append("Peso Médio: ")
+        .append(avgPeso())
+        .append(" kg\n")
+        .append("Porcentagem de Adultos: ")
+        .append(percentAdult())
+        .append("%\n")
+        .append("Moda da Moradia: ")
+        .append(modeMoradia())
+        .append("\n")
+        .append("Moda da Escolaridade: ")
+        .append(modeEscolaridade())
+        .append("\n")
+        .append("Moda do Estado Civil: ")
+        .append(modeEstadoCivil())
+        .append("\n")
+        .append("Porcentagem de Pessoas Felizes: ")
+        .append(percentFeliz())
+        .append("%\n");
+
+    return sb.toString();
+  }
 }

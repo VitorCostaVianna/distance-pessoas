@@ -378,4 +378,22 @@ public class Dataset {
     }
     return ((float)isFeliz / total) * 100;
   }
+
+  @Override
+  public String toString() {
+      StringBuilder sb = new StringBuilder();
+      sb.append("Estatísticas:\n")
+        .append("Altura Máxima: " + maxAltura() + " m\n").append(maxAltura()).append(" m\n")
+        .append("Altura Média: ").append(avgAltura()).append(" m\n")
+        .append("Altura Mínima: ").append(minAltura()).append(" m\n")
+        .append("Peso Máximo: ").append(maxPeso()).append(" kg\n")
+        .append("Peso Mínimo: ").append(minPeso()).append(" kg\n")
+        .append("Peso Médio: ").append(avgPeso()).append(" kg\n")
+        .append("Porcentagem de Adultos: ").append(percentAdult()).append("%\n")
+        .append("Moda da Moradia: ").append(modeMoradia()).append("\n")
+        .append("Moda da Escolaridade: ").append(modeEscolaridade()).append("\n")
+        .append("Moda do Estado Civil: ").append(modeEstadoCivil()).append("\n")
+        .append("Porcentagem de Pessoas Felizes: ").append(percentFeliz()).append("%\n");
+  
+      return sb.toString();
 }

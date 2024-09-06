@@ -55,7 +55,6 @@ public class DistanceMeasure {
       }
       return normalizedField;
     }
-
     return null;
   }
 
@@ -72,6 +71,7 @@ public class DistanceMeasure {
     if (firstPessoa.equals(null) || secondPessoa.equals(null)) {
       return -1;
     }
+    
     float sumDistances = 0;
     Float[] normalizedPesos = normalizeField("Peso");
     Float[] normalizedAlturas = normalizeField("Altura");

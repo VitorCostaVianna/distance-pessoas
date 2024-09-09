@@ -24,7 +24,6 @@ public class Pessoa {
     this.peso = 0;
     this.renda = 0;
     this.dataDeNascimento = LocalDate.parse("01/01/2024", fmt);
-
   }
 
   public Pessoa(
@@ -79,7 +78,10 @@ public class Pessoa {
   }
 
   public void setGenero(Genero genero) {
-    if (genero != null){
+    if (genero == Genero.FEMININO
+        || genero == Genero.MASCULINO
+        || genero == Genero.NAO_BINARIO
+        || genero == Genero.NAO_RESPONDER) {
       this.genero = genero;
     }
   }
@@ -119,9 +121,7 @@ public class Pessoa {
   }
 
   public void setNaturalidade(String naturalidade) {
-    if (naturalidade != null){
-      this.naturalidade = naturalidade;
-    }
+    this.naturalidade = naturalidade;
   }
 
   public Hobby getHobby() {
@@ -129,7 +129,14 @@ public class Pessoa {
   }
 
   public void setHobby(Hobby hobby) {
-    if (hobby != null){
+    if (hobby == Hobby.ARTE
+        || hobby == Hobby.CINEMA
+        || hobby == Hobby.CULINÁRIA
+        || hobby == Hobby.GAME
+        || hobby == Hobby.ESPORTE
+        || hobby == Hobby.LIVRO
+        || hobby == Hobby.MÚSICA
+        || hobby == Hobby.NENHUM) {
       this.hobby = hobby;
     }
   }
@@ -139,7 +146,11 @@ public class Pessoa {
   }
 
   public void setEstadoCivil(EstadoCivil estadoCivil) {
-    if (estadoCivil != null){
+    if (estadoCivil == EstadoCivil.CASADO
+        || estadoCivil == EstadoCivil.SOLTEIRO
+        || estadoCivil == EstadoCivil.SEPARADO
+        || estadoCivil == EstadoCivil.DIVORCIADO
+        || estadoCivil == EstadoCivil.VIUVO) {
       this.estadoCivil = estadoCivil;
     }
   }
@@ -149,7 +160,11 @@ public class Pessoa {
   }
 
   public void setEscolaridade(Escolaridade escolaridade) {
-    if (escolaridade != null){
+    if (escolaridade == Escolaridade.FUNDAMENTAL
+        || escolaridade == Escolaridade.MEDIO
+        || escolaridade == Escolaridade.SUPERIOR
+        || escolaridade == Escolaridade.POS_GRADUACAO
+        || escolaridade == Escolaridade.NENHUMA) {
       this.escolaridade = escolaridade;
     }
   }
@@ -167,7 +182,9 @@ public class Pessoa {
   }
 
   public void setMoradia(Moradia moradia) {
-    if (moradia != null){
+    if (moradia == Moradia.ALUGUEL
+        || moradia == Moradia.CASA_PROPRIA
+        || moradia == Moradia.COM_FAMILIA) {
       this.moradia = moradia;
     }
   }
@@ -209,29 +226,40 @@ public class Pessoa {
     return nome + " é feliz";
   }
 
-  public int calculaIdade(){
-    int anoAtual = LocalDate.now().getYear();  
-    return anoAtual -  dataDeNascimento.getYear();
+  public int calculaIdade() {
+    int anoAtual = LocalDate.now().getYear();
+    return anoAtual - dataDeNascimento.getYear();
   }
 
   @Override
   public String toString() {
-      StringBuilder sb = new StringBuilder();
-      sb.append("\n -----Dados da Pessoa-----\n")
-        .append(" \n nome: ").append(nome)
-        .append(", \n Data De Nascimento: ").append(dataDeNascimento.format(fmt))
-        .append(", \n Genero: ").append(genero)
-        .append(", \n Altura: ").append(altura)
-        .append(", \n Peso: ").append(peso)
-        .append(", \n Renda: ").append(renda)
-        .append(", \n Naturalidade: ").append(naturalidade)
-        .append(", \n Hobby: ").append(hobby)
-        .append(", \n Estado Civil: ").append(estadoCivil)
-        .append(", \n Escolaridade: ").append(escolaridade)
-        .append(", \n ").append(ImprimeFeliz())
-        .append(", \n Moradia: ").append(moradia);
-  
-      return sb.toString();
+    StringBuilder sb = new StringBuilder();
+    sb.append("\n -----Dados da Pessoa-----\n")
+        .append(" \n nome: ")
+        .append(nome)
+        .append(", \n Data De Nascimento: ")
+        .append(dataDeNascimento.format(fmt))
+        .append(", \n Genero: ")
+        .append(genero)
+        .append(", \n Altura: ")
+        .append(altura)
+        .append(", \n Peso: ")
+        .append(peso)
+        .append(", \n Renda: ")
+        .append(renda)
+        .append(", \n Naturalidade: ")
+        .append(naturalidade)
+        .append(", \n Hobby: ")
+        .append(hobby)
+        .append(", \n Estado Civil: ")
+        .append(estadoCivil)
+        .append(", \n Escolaridade: ")
+        .append(escolaridade)
+        .append(", \n ")
+        .append(ImprimeFeliz())
+        .append(", \n Moradia: ")
+        .append(moradia);
+
+    return sb.toString();
   }
-  
 }

@@ -105,7 +105,7 @@ public class DistanceMeasureTest {
   void testCalcDistanceVector() {
     Float[] vectExpect = new Float[]{0f ,0.85f};
     Float[] result = distance.calcDistanceVector(pessoa1);
-    float delta = 0.01f; // define a margem de erro aceitável
+    float delta = 0.01f;
     
     for (int i = 0; i < vectExpect.length; i++) {
         assertTrue(Math.abs(vectExpect[i] - result[i]) < delta, "Verificando vetor de distâncias no índice " + i);

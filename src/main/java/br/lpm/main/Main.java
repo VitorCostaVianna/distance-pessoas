@@ -89,7 +89,7 @@ public class Main {
   private static void cadastrarDataset() {
     dataset = new Dataset();
     int qtdePessoasDataset = obterQuantidadePessoas();
-    for (int i = 0; i < qtdePessoasDataset; i++) {
+   // for (int i = 0; i < qtdePessoasDataset; i++) {
       // Pessoa newPessoa = cadastrarPessoa();
       Pessoa pessoa1 = new Pessoa("Vitor",
       LocalDate.parse("14/09/2005", fmt),
@@ -103,9 +103,37 @@ public class Main {
       Escolaridade.SUPERIOR,
       true,
       Moradia.ALUGUEL);
+      Pessoa pessoa2 = new Pessoa("Arlindo",
+      LocalDate.parse("19/07/2005", fmt),
+      Genero.MASCULINO,
+      1.80f,
+      73,
+      3000f,
+      "Belo Horizonte",
+      Hobby.ESPORTE,
+      EstadoCivil.SOLTEIRO,
+      Escolaridade.MEDIO,
+      true,
+      Moradia.ALUGUEL);
+      Pessoa pessoa3 = new Pessoa("Joaquim",
+      LocalDate.parse("19/07/2007", fmt),
+      Genero.MASCULINO,
+      1.75f,
+      73,
+      4000f,
+      "Belo Horizonte",
+      Hobby.GAME,
+      EstadoCivil.CASADO,
+      Escolaridade.SUPERIOR,
+      true,
+      Moradia.ALUGUEL);
       dataset.addPessoa(pessoa1);
-      JOptionPane.showMessageDialog(null, pessoa1, null, i);
-    }
+      dataset.addPessoa(pessoa2);
+      dataset.addPessoa(pessoa3);
+      JOptionPane.showMessageDialog(null, pessoa1);
+      JOptionPane.showMessageDialog(null, pessoa2);
+      JOptionPane.showMessageDialog(null, pessoa3);
+  //  }
   }
 
   private static Integer obterQuantidadePessoas() {

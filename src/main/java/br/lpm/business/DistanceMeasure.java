@@ -59,89 +59,89 @@ public class DistanceMeasure {
   }
 
   private int getPessoaPosition(Pessoa pessoa) {
+    if (pessoas == null || pessoa == null) {
+        return -1;
+    }
+
     for (int i = 0; i < dataset.size(); i++) {
-      if (pessoas[i].equals(pessoa)) {
-        return i;
-      }
+        if (pessoas[i] != null && pessoas[i].equals(pessoa)) {
+            return i;
+        }
     }
     return -1;
+    }
+
+
+    public float calcDistance(Pessoa firstPessoa, Pessoa secondPessoa) {
+      if (firstPessoa == null || secondPessoa == null) {
+          return -1;
+      }
+
+      int firstPessoaPosition = getPessoaPosition(firstPessoa);
+      int secondPessoaPosition = getPessoaPosition(secondPessoa);
+      if (firstPessoaPosition == -1 || secondPessoaPosition == -1) {
+          return -1;
+      }
+      float sumDistances = 0;
+
+      Float[] normalizedPesos = normalizeField("Peso");
+      Float[] normalizedAlturas = normalizeField("Altura");
+      Float[] normalizedIdades = normalizeField("Idade");
+      Float[] normalizedRendas = normalizeField("Renda");
+  
+      final int TOTAL_ATRIBUTOS = 11;
+
+      if (!firstPessoa.getHobby().equals(secondPessoa.getHobby())) {
+          sumDistances++;
+      }
+      if (!firstPessoa.getEstadoCivil().equals(secondPessoa.getEstadoCivil())) {
+          sumDistances++;
+      }
+      if (!firstPessoa.getMoradia().equals(secondPessoa.getMoradia())) {
+          sumDistances++;
+      }
+      if (!firstPessoa.getEscolaridade().equals(secondPessoa.getEscolaridade())) {
+          sumDistances++;
+      }
+      if (!firstPessoa.getGenero().equals(secondPessoa.getGenero())) {
+          sumDistances++;
+      }
+      if (!firstPessoa.getNaturalidade().equalsIgnoreCase(secondPessoa.getNaturalidade())) {
+          sumDistances++;
+      }
+      if (!(firstPessoa.getFeliz() == secondPessoa.getFeliz())) {
+          sumDistances++;
+      }
+
+      sumDistances += Math.pow(Math.abs(normalizedAlturas[firstPessoaPosition] - normalizedAlturas[secondPessoaPosition]), 2);
+      sumDistances += Math.pow(Math.abs(normalizedPesos[firstPessoaPosition] - normalizedPesos[secondPessoaPosition]), 2);
+      sumDistances += Math.pow(Math.abs(normalizedIdades[firstPessoaPosition] - normalizedIdades[secondPessoaPosition]), 2);
+      sumDistances += Math.pow(Math.abs(normalizedRendas[firstPessoaPosition] - normalizedRendas[secondPessoaPosition]), 2);
+  
+      return (float) Math.sqrt(sumDistances / TOTAL_ATRIBUTOS);
   }
+  
 
-  public float calcDistance(Pessoa firstPessoa, Pessoa secondPessoa) {
-    if (firstPessoa.equals(null) || secondPessoa.equals(null)) {
-      return -1;
-    }
-
-    float sumDistances = 0;
-    Float[] normalizedPesos = normalizeField("Peso");
-    Float[] normalizedAlturas = normalizeField("Altura");
-    Float[] normalizedIdades = normalizeField("Idade");
-    Float[] normalizedRendas = normalizeField("Renda");
-    int firstPessoaPosition = getPessoaPosition(firstPessoa);
-    int secondPessoaPosition = getPessoaPosition(secondPessoa);
-    final int TOTAL_ATRIBUTOS = 11;
-
-    if (!firstPessoa.getHobby().equals(secondPessoa.getHobby())) {
-      sumDistances++;
-    }
-    if (!firstPessoa.getEstadoCivil().equals(secondPessoa.getEstadoCivil())) {
-      sumDistances++;
-    }
-    if (!firstPessoa.getMoradia().equals(secondPessoa.getMoradia())) {
-      sumDistances++;
-    }
-    if (!firstPessoa.getEscolaridade().equals(secondPessoa.getEscolaridade())) {
-      sumDistances++;
-    }
-    if (!firstPessoa.getGenero().equals(secondPessoa.getGenero())) {
-      sumDistances++;
-    }
-    if (!firstPessoa.getNaturalidade().equalsIgnoreCase(secondPessoa.getNaturalidade())) {
-      sumDistances++;
-    }
-    if (!(firstPessoa.getFeliz() == secondPessoa.getFeliz())) {
-      sumDistances++;
+public Float[] calcDistanceVector(Pessoa pessoa) {
+    if (pessoas == null || pessoa == null) {
+        return new Float[0]; 
     }
 
-    sumDistances +=
-        Math.pow(
-            Math.abs(
-                normalizedAlturas[firstPessoaPosition] - normalizedAlturas[secondPessoaPosition]),
-            2);
-    sumDistances +=
-        Math.pow(
-            Math.abs(normalizedPesos[firstPessoaPosition] - normalizedPesos[secondPessoaPosition]),
-            2);
-    sumDistances +=
-        Math.pow(
-            Math.abs(
-                normalizedIdades[firstPessoaPosition] - normalizedIdades[secondPessoaPosition]),
-            2);
-    sumDistances +=
-        Math.pow(
-            Math.abs(
-                normalizedRendas[firstPessoaPosition] - normalizedRendas[secondPessoaPosition]),
-            2);
-
-    return (float) Math.sqrt(sumDistances / TOTAL_ATRIBUTOS);
-  }
-
-  public Float[] calcDistanceVector(Pessoa pessoa) {
     int qtdePessoasDiferente = calcQtdePessoasDiferentes(pessoa);
-
     Float[] distanceVector = new Float[qtdePessoasDiferente];
+
     int i = 0;
     for (Pessoa p : pessoas) {
-      if (!pessoa.equals(p)) {
-        distanceVector[i] = calcDistance(pessoa, p);
-        i++;
-      }
+        if (!pessoa.equals(p)) {
+            distanceVector[i] = calcDistance(pessoa, p);
+            i++;
+        }
+    }
+    return distanceVector;
     }
 
-    return distanceVector;
-  }
 
-  private int calcQtdePessoasDiferentes(Pessoa pessoa){
+  private int calcQtdePessoasDiferentes(Pessoa pessoa) {
     int qtdePessoasDiferente = 0;
     for (Pessoa p : pessoas) {
       if (!pessoa.equals(p)) {
@@ -181,7 +181,7 @@ public class DistanceMeasure {
         limiteArray++;
       }
     }
-    
+
     return similarPessoa;
   }
 

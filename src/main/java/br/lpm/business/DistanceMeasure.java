@@ -9,55 +9,6 @@ public class DistanceMeasure {
     pessoas = dataset.getAll();
   }
 
-  private Float[] normalizeField(String fieldName) {
-    Float[] normalizedField = new Float[dataset.size()];
-
-    if (fieldName.equalsIgnoreCase("Peso")) {
-      Float[] pesos = new Float[dataset.size()];
-      float maxPeso = dataset.maxPeso();
-      float minPeso = dataset.minPeso();
-      for (int i = 0; i < pesos.length; i++) {
-        pesos[i] = (float) pessoas[i].getPeso();
-        normalizedField[i] = (pesos[i] - minPeso) / (maxPeso - minPeso);
-      }
-      return normalizedField;
-    }
-
-    if (fieldName.equalsIgnoreCase("Altura")) {
-      Float[] alturas = new Float[dataset.size()];
-      float maxAltura = dataset.maxAltura();
-      float minAltura = dataset.minAltura();
-      for (int i = 0; i < alturas.length; i++) {
-        alturas[i] = (float) pessoas[i].getAltura();
-        normalizedField[i] = (alturas[i] - minAltura) / (maxAltura - minAltura);
-      }
-      return normalizedField;
-    }
-
-    if (fieldName.equalsIgnoreCase("Renda")) {
-      Float[] rendas = new Float[dataset.size()];
-      float maxRenda = dataset.maxRenda();
-      float minRenda = dataset.minRenda();
-      for (int i = 0; i < rendas.length; i++) {
-        rendas[i] = (float) pessoas[i].getRenda();
-        normalizedField[i] = (rendas[i] - minRenda) / (maxRenda - minRenda);
-      }
-      return normalizedField;
-    }
-
-    if (fieldName.equalsIgnoreCase("Idade")) {
-      Float[] idades = new Float[dataset.size()];
-      float maxIdade = dataset.maxIdade();
-      float minIdade = dataset.minIdade();
-      for (int i = 0; i < idades.length; i++) {
-        idades[i] = (float) pessoas[i].calculaIdade();
-        normalizedField[i] = (idades[i] - minIdade) / (maxIdade - minIdade);
-      }
-      return normalizedField;
-    }
-    return null;
-  }
-
   private int getPessoaPosition(Pessoa pessoa) {
     if (pessoas == null || pessoa == null) {
         return -1;
@@ -84,10 +35,10 @@ public class DistanceMeasure {
       }
       float sumDistances = 0;
 
-      Float[] normalizedPesos = normalizeField("Peso");
-      Float[] normalizedAlturas = normalizeField("Altura");
-      Float[] normalizedIdades = normalizeField("Idade");
-      Float[] normalizedRendas = normalizeField("Renda");
+      Float[] normalizedPesos = dataset.normalizeField("Peso");
+      Float[] normalizedAlturas = dataset.normalizeField("Altura");
+      Float[] normalizedIdades = dataset.normalizeField("Idade");
+      Float[] normalizedRendas = dataset.normalizeField("Renda");
   
       final int TOTAL_ATRIBUTOS = 11;
 

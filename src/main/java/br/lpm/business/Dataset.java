@@ -377,6 +377,55 @@ public class Dataset {
     return ((float) isFeliz / total) * 100;
   }
 
+  protected Float[] normalizeField(String fieldName) {
+    Float[] normalizedField = new Float[size()];
+
+    if (fieldName.equalsIgnoreCase("Peso")) {
+      Float[] pesos = new Float[size()];
+      float maxPeso = maxPeso();
+      float minPeso = minPeso();
+      for (int i = 0; i < pesos.length; i++) {
+        pesos[i] = (float) pessoas[i].getPeso();
+        normalizedField[i] = (pesos[i] - minPeso) / (maxPeso - minPeso);
+      }
+      return normalizedField;
+    }
+
+    if (fieldName.equalsIgnoreCase("Altura")) {
+      Float[] alturas = new Float[size()];
+      float maxAltura = maxAltura();
+      float minAltura = minAltura();
+      for (int i = 0; i < alturas.length; i++) {
+        alturas[i] = (float) pessoas[i].getAltura();
+        normalizedField[i] = (alturas[i] - minAltura) / (maxAltura - minAltura);
+      }
+      return normalizedField;
+    }
+
+    if (fieldName.equalsIgnoreCase("Renda")) {
+      Float[] rendas = new Float[size()];
+      float maxRenda = maxRenda();
+      float minRenda = minRenda();
+      for (int i = 0; i < rendas.length; i++) {
+        rendas[i] = (float) pessoas[i].getRenda();
+        normalizedField[i] = (rendas[i] - minRenda) / (maxRenda - minRenda);
+      }
+      return normalizedField;
+    }
+
+    if (fieldName.equalsIgnoreCase("Idade")) {
+      Float[] idades = new Float[size()];
+      float maxIdade = maxIdade();
+      float minIdade = minIdade();
+      for (int i = 0; i < idades.length; i++) {
+        idades[i] = (float) pessoas[i].calculaIdade();
+        normalizedField[i] = (idades[i] - minIdade) / (maxIdade - minIdade);
+      }
+      return normalizedField;
+    }
+    return null;
+  }
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();

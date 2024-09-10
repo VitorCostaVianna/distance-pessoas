@@ -1,4 +1,21 @@
-<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>490</x><y>600</y><w>210</w><h>180</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>570</x><y>350</y><w>260</w><h>250</h></coordinates><panel_attributes>Pessoa::br.lpm.business
+--
+-nome: String
+-dataNascimento: LocalDate
+-genero: Genero
+-altura: Float
+-peso: int
+-renda: Float
+-naturaidade: String
+-hobby: Hobby
+-estadoCivil: EstadoCivil
+-escolaridade: Escolaridade
+-feliz: boolean
+-moradia: Moradia
+--
++toString(): String
++ calculaIdade: int
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>960</x><y>590</y><w>210</w><h>180</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
 Hobby::br.lpm.business
 --
 +ARTE
@@ -9,7 +26,7 @@ Hobby::br.lpm.business
 +CULINÁRIA
 +GAME
 +NENHUM
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>960</x><y>600</y><w>210</w><h>180</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>960</x><y>200</y><w>210</w><h>180</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
 EstadoCivil::br.lpm.business
 --
 +SOLTEIRO
@@ -17,14 +34,14 @@ EstadoCivil::br.lpm.business
 +VIUVO
 +SEPARADO
 +DIVORCIADO
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>720</x><y>600</y><w>220</w><h>180</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>960</x><y>390</y><w>220</w><h>180</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
 Genero::br.lpm.business
 --
 +FEMININO
 +MASCULINO
 +NAO_BINARIO
 +NAO_RESPONDER
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1200</x><y>600</y><w>210</w><h>180</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>960</x><y>0</y><w>210</w><h>180</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
 Escolaridade::br.lpm.business
 --
 +NENHUMA
@@ -35,13 +52,13 @@ Escolaridade::br.lpm.business
 +CULINÁRIA
 +GAME
 +NENHUM
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>260</x><y>600</y><w>210</w><h>180</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>970</x><y>790</y><w>210</w><h>180</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
 Moradia::br.lpm.business
 --
 +COM_FAMILIA
 +ALUGUEL
 +CASA_PROPRIA
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>130</x><y>30</y><w>340</w><h>430</h></coordinates><panel_attributes>Dataset::br.lpm.business
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>180</x><y>120</y><w>340</w><h>430</h></coordinates><panel_attributes>Dataset::br.lpm.business
 --
 _-&lt;&lt;final&gt;&gt;MAX_PESSOAS: int_
 -pessoas : Pessoa[]
@@ -69,30 +86,13 @@ _-&lt;&lt;final&gt;&gt;MAX_PESSOAS: int_
 +percentMoradia(enum  Moradia): Float
 +modeMoradia(): Moradia
 +percentHobby(): Float
-+percentFeliz(): Float</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>500</x><y>30</y><w>340</w><h>160</h></coordinates><panel_attributes>DistanceMeasure::br.lpm.business
++percentFeliz(): Float</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>820</x><y>110</y><w>160</w><h>370</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>140;10;10;350</additional_attributes></element><element><id>Relation</id><coordinates><x>820</x><y>270</y><w>160</w><h>210</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>140;10;10;190</additional_attributes></element><element><id>Relation</id><coordinates><x>820</x><y>450</y><w>160</w><h>40</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>140;20;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>820</x><y>450</y><w>160</w><h>260</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>140;240;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>820</x><y>450</y><w>170</w><h>440</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>150;420;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>200</x><y>620</y><w>340</w><h>130</h></coordinates><panel_attributes>DistanceMeasure::br.lpm.business
 --
 - dataset: Dataset
 -pessoas : Pessoa[]
 --
--normalizeField(): Float[] 
-+calcDistance(): float
-+calcDistanceVector(): Float[]
-+CalcDistanceMatrix() : Float[][]
-+getSimilar(): Pessoa[]</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>770</x><y>280</y><w>260</w><h>250</h></coordinates><panel_attributes>Pessoa::br.lpm.business
---
--nome: String
--dataNascimento: LocalDate
--genero: Genero
--altura: Float
--peso: int
--renda: Float
--naturaidade: String
--hobby: Hobby
--estadoCivil: EstadoCivil
--escolaridade: Escolaridade
--feliz: boolean
--moradia: Moradia
---
-+toString(): String
-+ calculaIdade: int
+-normalizeField(String fieldName): Float[]
++calcDistance(Pessoa: Pessoa): float
++calcDistanceVector(Pessoa): Float[]
++calcDistanceMatrix(): Float[][]
 </panel_attributes><additional_attributes></additional_attributes></element></diagram>

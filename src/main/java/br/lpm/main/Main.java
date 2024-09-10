@@ -333,6 +333,7 @@ public class Main {
   }
 
   private static void exibePessoasSimilares(Pessoa pessoa, int n) {
+    distance = new DistanceMeasure(dataset);
     Pessoa[] pessoasSimilares = distance.getSimilar(pessoa, n);
 
     StringBuilder sb = new StringBuilder();

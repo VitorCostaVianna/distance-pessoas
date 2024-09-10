@@ -29,9 +29,13 @@ public class Main {
   public static void main(String[] args) {
     Locale.setDefault(Locale.US);
 
-    Pessoa pessoaPrincipal = new Pessoa();
     cadastrarDataset();
-    cadastrarPessoa(pessoaPrincipal);
+
+    Pessoa pessoaConsulta = cadastrarPessoa();
+    JOptionPane.showMessageDialog(
+        null, pessoaConsulta, "Pessoa cadastrada para consulta", JOptionPane.INFORMATION_MESSAGE);
+
+    exibePessoasSimilares(pessoaConsulta, 3);
     ShowMenu();
   }
 
@@ -83,47 +87,48 @@ public class Main {
 
   private static void cadastrarDataset() {
     dataset = new Dataset();
-    String qtdePessoasDatasetAux =
-        JOptionPane.showInputDialog(
-            "Digite a quantidade de pessoas que deseja cadastrar na base de dados: ");
-    int qtdePessoasDataset = 0;
-    if (qtdePessoasDatasetAux != null) {
-      qtdePessoasDataset = Integer.parseInt(qtdePessoasDatasetAux);
-    } else {
-      while (qtdePessoasDatasetAux == null) {
-        qtdePessoasDatasetAux = JOptionPane.showInputDialog("Digite um valor válido: ");
-      }
-      qtdePessoasDataset = Integer.parseInt(qtdePessoasDatasetAux);
-    }
+    int qtdePessoasDataset = obterQuantidadePessoas();
     for (int i = 0; i < qtdePessoasDataset; i++) {
-      cadastrarPessoa();
+      Pessoa newPessoa = cadastrarPessoa();
+      dataset.addPessoa(newPessoa);
     }
   }
 
-  public static void cadastrarPessoa() {
+  private static Integer obterQuantidadePessoas() {
+    Integer qtdePessoasDatasetAux =
+        Integer.parseInt(
+            (JOptionPane.showInputDialog(
+                "Digite a quantidade de pessoas que deseja cadastrar na base de dados: ")));
+    while (qtdePessoasDatasetAux == null) {
+      qtdePessoasDatasetAux =
+          Integer.parseInt(
+              (JOptionPane.showInputDialog(
+                  "Digite a quantidade de pessoas que deseja cadastrar na base de dados: ")));
+    }
+    int qtdePessoasDataset = qtdePessoasDatasetAux;
+    return qtdePessoasDataset;
+  }
+
+  public static Pessoa cadastrarPessoa() {
     String nomeAux = JOptionPane.showInputDialog("Digite seu nome: ");
-    String nome = null;
     while (nomeAux == null) {
       nomeAux = JOptionPane.showInputDialog("Digite seu nome: ");
     }
-    nome = nomeAux;
+    String nome = nomeAux;
 
     String dataDeAniversarioAux =
         JOptionPane.showInputDialog("Digite a data de aniversário (dd/MM/yyyy): ");
-    LocalDate dataDeAniversario = null;
-
     while (dataDeAniversarioAux == null) {
       dataDeAniversarioAux =
           JOptionPane.showInputDialog("Insira a data de aniversário (dd/MM/yyyy): ");
     }
-    dataDeAniversario = LocalDate.parse(dataDeAniversarioAux, fmt);
+    LocalDate dataDeAniversario = LocalDate.parse(dataDeAniversarioAux, fmt);
 
     Genero generoAux =
         Genero.valueOf(
             JOptionPane.showInputDialog(
                     "Digite o gênero (MASCULINO, FEMININO, NAO_BINARIO, NAO_RESPONDER): ")
                 .toUpperCase());
-    Genero genero = null;
     while (generoAux == null) {
       generoAux =
           Genero.valueOf(
@@ -131,36 +136,32 @@ public class Main {
                       "Digite um gênero (MASCULINO, FEMININO, NAO_BINARIO, NAO_RESPONDER): ")
                   .toUpperCase());
     }
-    genero = generoAux;
+    Genero genero = generoAux;
 
     Float alturaAux =
         Float.parseFloat(JOptionPane.showInputDialog("Digite a altura (em metros): "));
-    Float altura = null;
     while (alturaAux == null) {
       alturaAux = Float.parseFloat(JOptionPane.showInputDialog("Digite uma altura (em metros): "));
     }
-    altura = alturaAux;
+    float altura = alturaAux;
 
     Integer pesoAux = Integer.parseInt(JOptionPane.showInputDialog("Digite o peso (em kg): "));
-    Integer peso = null;
     while (pesoAux == null) {
       pesoAux = Integer.parseInt(JOptionPane.showInputDialog("Digite o peso (em kg): "));
     }
-    peso = pesoAux;
+    int peso = pesoAux;
 
     Float rendaAux = Float.parseFloat(JOptionPane.showInputDialog("Digite a renda: "));
-    Float renda = null;
     while (rendaAux == null) {
       rendaAux = Float.parseFloat(JOptionPane.showInputDialog("Digite a renda: "));
     }
-    renda = rendaAux;
+    float renda = rendaAux;
 
     String naturalidadeAux = JOptionPane.showInputDialog("Digite a naturalidade: ");
-    String naturalidade = null;
     while (naturalidadeAux == null) {
       naturalidadeAux = JOptionPane.showInputDialog("Digite a naturalidade: ");
     }
-    naturalidade = naturalidadeAux;
+    String naturalidade = naturalidadeAux;
 
     Hobby hobbyAux =
         Hobby.valueOf(
@@ -168,7 +169,6 @@ public class Main {
                     "Digite o hobby [ARTE, ESPORTE, CINEMA, LIVRO, MÚSICA, CULINÁRIA, GAME,"
                         + " NENHUM]: ")
                 .toUpperCase());
-    Hobby hobby = null;
     while (hobbyAux == null) {
       hobbyAux =
           Hobby.valueOf(
@@ -177,21 +177,20 @@ public class Main {
                           + " NENHUM]: ")
                   .toUpperCase());
     }
-    hobby = hobbyAux;
+    Hobby hobby = hobbyAux;
 
     EstadoCivil estadoCivilAux =
         EstadoCivil.valueOf(
             JOptionPane.showInputDialog(
                     "Digite o estado civil (SOLTEIRO, CASADO, DIVORCIADO, VIUVO, SEPARADO): ")
                 .toUpperCase());
-    EstadoCivil estadoCivil = null;
     while (estadoCivilAux == null) {
       EstadoCivil.valueOf(
           JOptionPane.showInputDialog(
                   "Digite o estado civil (SOLTEIRO, CASADO, DIVORCIADO, VIUVO, SEPARADO): ")
               .toUpperCase());
     }
-    estadoCivil = estadoCivilAux;
+    EstadoCivil estadoCivil = estadoCivilAux;
 
     Escolaridade escolaridadeAux =
         Escolaridade.valueOf(
@@ -199,7 +198,6 @@ public class Main {
                     "Digite a escolaridade (FUNDAMENTAL, MEDIO, SUPERIOR, POS_GRADUACAO, NENHUMA):"
                         + " ")
                 .toUpperCase());
-    Escolaridade escolaridade = null;
     while (escolaridadeAux == null) {
       Escolaridade.valueOf(
           JOptionPane.showInputDialog(
@@ -207,23 +205,21 @@ public class Main {
                       + " ")
               .toUpperCase());
     }
-    escolaridade = escolaridadeAux;
+    Escolaridade escolaridade = escolaridadeAux;
 
     Boolean felizAux =
         Boolean.parseBoolean(JOptionPane.showInputDialog("Você está feliz? (true/false): "));
-    Boolean feliz = null;
     while (felizAux == null) {
       felizAux =
           Boolean.parseBoolean(JOptionPane.showInputDialog("Você está feliz? (true/false): "));
     }
-    feliz = felizAux;
+    boolean feliz = felizAux;
 
     Moradia moradiaAux =
         Moradia.valueOf(
             JOptionPane.showInputDialog(
                     "Digite o tipo de moradia [COM_FAMILIA, ALUGUEL, CASA_PROPRIA]: ")
                 .toUpperCase());
-    Moradia moradia = null;
     while (moradiaAux == null) {
       moradiaAux =
           Moradia.valueOf(
@@ -231,7 +227,7 @@ public class Main {
                       "Digite o tipo de moradia [COM_FAMILIA, ALUGUEL, CASA_PROPRIA]: ")
                   .toUpperCase());
     }
-    moradia = moradiaAux;
+    Moradia moradia = moradiaAux;
 
     Pessoa pessoa =
         new Pessoa(
@@ -247,166 +243,9 @@ public class Main {
             escolaridade,
             feliz,
             moradia);
-    dataset.addPessoa(pessoa);
     JOptionPane.showMessageDialog(
         null, pessoa, "Pessoa Cadastrada", JOptionPane.INFORMATION_MESSAGE);
-  }
-
-  public static void cadastrarPessoa(Pessoa newPessoa) {
-    JOptionPane.showMessageDialog(null, "Cadastro da pessoa a ser comparada: ");
-
-    String nomeAux = JOptionPane.showInputDialog("Digite seu nome: ");
-    String nome = null;
-
-    while (nomeAux == null) {
-      nomeAux = JOptionPane.showInputDialog("Digite seu nome: ");
-    }
-    nome = nomeAux;
-
-    String dataDeAniversarioAux =
-        JOptionPane.showInputDialog("Digite a data de aniversário (dd/MM/yyyy): ");
-    LocalDate dataDeAniversario = null;
-
-    while (dataDeAniversarioAux == null) {
-      dataDeAniversarioAux =
-          JOptionPane.showInputDialog("Insira a data de aniversário (dd/MM/yyyy): ");
-    }
-    dataDeAniversario = LocalDate.parse(dataDeAniversarioAux, fmt);
-
-    Genero generoAux =
-        Genero.valueOf(
-            JOptionPane.showInputDialog(
-                    "Digite o gênero (MASCULINO, FEMININO, NAO_BINARIO, NAO_RESPONDER): ")
-                .toUpperCase());
-    Genero genero = null;
-    while (generoAux == null) {
-      generoAux =
-          Genero.valueOf(
-              JOptionPane.showInputDialog(
-                      "Digite um gênero (MASCULINO, FEMININO, NAO_BINARIO, NAO_RESPONDER): ")
-                  .toUpperCase());
-    }
-    genero = generoAux;
-
-    Float alturaAux =
-        Float.parseFloat(JOptionPane.showInputDialog("Digite a altura (em metros): "));
-    Float altura = null;
-    while (alturaAux == null) {
-      alturaAux = Float.parseFloat(JOptionPane.showInputDialog("Digite uma altura (em metros): "));
-    }
-    altura = alturaAux;
-
-    Integer pesoAux = Integer.parseInt(JOptionPane.showInputDialog("Digite o peso (em kg): "));
-    Integer peso = null;
-    while (pesoAux == null) {
-      pesoAux = Integer.parseInt(JOptionPane.showInputDialog("Digite o peso (em kg): "));
-    }
-    peso = pesoAux;
-
-    Float rendaAux = Float.parseFloat(JOptionPane.showInputDialog("Digite a renda: "));
-    Float renda = null;
-    while (rendaAux == null) {
-      rendaAux = Float.parseFloat(JOptionPane.showInputDialog("Digite a renda: "));
-    }
-    renda = rendaAux;
-
-    String naturalidadeAux = JOptionPane.showInputDialog("Digite a naturalidade: ");
-    String naturalidade = null;
-    while (naturalidadeAux == null) {
-      naturalidadeAux = JOptionPane.showInputDialog("Digite a naturalidade: ");
-    }
-    naturalidade = naturalidadeAux;
-
-    Hobby hobbyAux =
-        Hobby.valueOf(
-            JOptionPane.showInputDialog(
-                    "Digite o hobby [ARTE, ESPORTE, CINEMA, LIVRO, MÚSICA, CULINÁRIA, GAME,"
-                        + " NENHUM]: ")
-                .toUpperCase());
-    Hobby hobby = null;
-    while (hobbyAux == null) {
-      hobbyAux =
-          Hobby.valueOf(
-              JOptionPane.showInputDialog(
-                      "Digite o hobby [ARTE, ESPORTE, CINEMA, LIVRO, MÚSICA, CULINÁRIA, GAME,"
-                          + " NENHUM]: ")
-                  .toUpperCase());
-    }
-    hobby = hobbyAux;
-
-    EstadoCivil estadoCivilAux =
-        EstadoCivil.valueOf(
-            JOptionPane.showInputDialog(
-                    "Digite o estado civil (SOLTEIRO, CASADO, DIVORCIADO, VIUVO, SEPARADO): ")
-                .toUpperCase());
-    EstadoCivil estadoCivil = null;
-    while (estadoCivilAux == null) {
-      EstadoCivil.valueOf(
-          JOptionPane.showInputDialog(
-                  "Digite o estado civil (SOLTEIRO, CASADO, DIVORCIADO, VIUVO, SEPARADO): ")
-              .toUpperCase());
-    }
-    estadoCivil = estadoCivilAux;
-
-    Escolaridade escolaridadeAux =
-        Escolaridade.valueOf(
-            JOptionPane.showInputDialog(
-                    "Digite a escolaridade (FUNDAMENTAL, MEDIO, SUPERIOR, POS_GRADUACAO, NENHUMA):"
-                        + " ")
-                .toUpperCase());
-    Escolaridade escolaridade = null;
-    while (escolaridadeAux == null) {
-      Escolaridade.valueOf(
-          JOptionPane.showInputDialog(
-                  "Digite a escolaridade (FUNDAMENTAL, MEDIO, SUPERIOR, POS_GRADUACAO, NENHUMA):"
-                      + " ")
-              .toUpperCase());
-    }
-    escolaridade = escolaridadeAux;
-
-    Boolean felizAux =
-        Boolean.parseBoolean(JOptionPane.showInputDialog("Você está feliz? (true/false): "));
-    Boolean feliz = null;
-    while (felizAux == null) {
-      felizAux =
-          Boolean.parseBoolean(JOptionPane.showInputDialog("Você está feliz? (true/false): "));
-    }
-    feliz = felizAux;
-
-    Moradia moradiaAux =
-        Moradia.valueOf(
-            JOptionPane.showInputDialog(
-                    "Digite o tipo de moradia [COM_FAMILIA, ALUGUEL, CASA_PROPRIA]: ")
-                .toUpperCase());
-    Moradia moradia = null;
-    while (moradiaAux == null) {
-      moradiaAux =
-          Moradia.valueOf(
-              JOptionPane.showInputDialog(
-                      "Digite o tipo de moradia [COM_FAMILIA, ALUGUEL, CASA_PROPRIA]: ")
-                  .toUpperCase());
-    }
-    moradia = moradiaAux;
-
-    newPessoa =
-        new Pessoa(
-            nome,
-            dataDeAniversario,
-            genero,
-            altura,
-            peso,
-            renda,
-            naturalidade,
-            hobby,
-            estadoCivil,
-            escolaridade,
-            feliz,
-            moradia);
-    dataset.addPessoa(newPessoa);
-    distance = new DistanceMeasure(dataset);
-    JOptionPane.showMessageDialog(
-        null, newPessoa, "Pessoa Cadastrada", JOptionPane.INFORMATION_MESSAGE);
-    exibePessoasSimilares(newPessoa);
+    return pessoa;
   }
 
   public static void pesquisarPessoa() {
@@ -497,8 +336,8 @@ public class Main {
         null, frameGrafico.getContentPane(), "Pie Chart", JOptionPane.PLAIN_MESSAGE);
   }
 
-  private static void exibePessoasSimilares(Pessoa pessoa) {
-    Pessoa[] pessoasSimilares = distance.getSimilar(pessoa, 3);
+  private static void exibePessoasSimilares(Pessoa pessoa, int n) {
+    Pessoa[] pessoasSimilares = distance.getSimilar(pessoa, n);
 
     StringBuilder sb = new StringBuilder();
     sb.append(pessoasSimilares[0])

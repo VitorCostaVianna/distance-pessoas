@@ -111,124 +111,92 @@ public class Main {
   }
 
   private static Pessoa cadastrarPessoa() {
-    String nomeAux = JOptionPane.showInputDialog("Digite seu nome: ");
-    while (nomeAux == null) {
-      nomeAux = JOptionPane.showInputDialog("Digite seu nome: ");
+    String nome = null;
+    while (nome == null) {
+      nome = JOptionPane.showInputDialog("Digite seu nome: ");
     }
-    String nome = nomeAux;
 
-    String dataDeAniversarioAux =
-        JOptionPane.showInputDialog("Digite a data de aniversário (dd/MM/yyyy): ");
+    String dataDeAniversarioAux = null;
     while (dataDeAniversarioAux == null) {
       dataDeAniversarioAux =
-          JOptionPane.showInputDialog("Insira a data de aniversário (dd/MM/yyyy): ");
+          JOptionPane.showInputDialog("Digite a data de aniversário (dd/MM/yyyy): ");
     }
     LocalDate dataDeAniversario = LocalDate.parse(dataDeAniversarioAux, fmt);
 
-    Genero generoAux =
-        Genero.valueOf(
-            JOptionPane.showInputDialog(
-                    "Digite o gênero (MASCULINO, FEMININO, NAO_BINARIO, NAO_RESPONDER): ")
-                .toUpperCase());
-    while (generoAux == null) {
+    String generoAux = null;
+    while (!isGeneroNotNull(generoAux)) {
       generoAux =
-          Genero.valueOf(
-              JOptionPane.showInputDialog(
-                      "Digite um gênero (MASCULINO, FEMININO, NAO_BINARIO, NAO_RESPONDER): ")
-                  .toUpperCase());
+          JOptionPane.showInputDialog(
+                  "Digite o gênero (MASCULINO, FEMININO, NAO_BINARIO, NAO_RESPONDER): ")
+              .toUpperCase();
     }
-    Genero genero = generoAux;
+    Genero genero = Genero.valueOf(generoAux);
 
-    Float alturaAux =
-        Float.parseFloat(JOptionPane.showInputDialog("Digite a altura (em metros): "));
-    while (alturaAux == null) {
-      alturaAux = Float.parseFloat(JOptionPane.showInputDialog("Digite uma altura (em metros): "));
+    String alturaAux = null;
+    while (!isFloatNotNull(alturaAux)) {
+      alturaAux = JOptionPane.showInputDialog("Digite a altura (em metros): ");
     }
-    float altura = alturaAux;
+    float altura = Float.parseFloat(alturaAux);
 
-    Integer pesoAux = Integer.parseInt(JOptionPane.showInputDialog("Digite o peso (em kg): "));
-    while (pesoAux == null) {
-      pesoAux = Integer.parseInt(JOptionPane.showInputDialog("Digite o peso (em kg): "));
+    String pesoAux = null;
+    while (!isIntegerNotNull(pesoAux)) {
+      pesoAux = JOptionPane.showInputDialog("Digite o peso (em kg): ");
     }
-    int peso = pesoAux;
+    int peso = Integer.parseInt(pesoAux);
 
-    Float rendaAux = Float.parseFloat(JOptionPane.showInputDialog("Digite a renda: "));
-    while (rendaAux == null) {
-      rendaAux = Float.parseFloat(JOptionPane.showInputDialog("Digite a renda: "));
+    String rendaAux = null;
+    while (!isFloatNotNull(rendaAux)) {
+      rendaAux = JOptionPane.showInputDialog("Digite a renda: ");
     }
-    float renda = rendaAux;
+    float renda = Float.parseFloat(rendaAux);
 
-    String naturalidadeAux = JOptionPane.showInputDialog("Digite a naturalidade: ");
-    while (naturalidadeAux == null) {
-      naturalidadeAux = JOptionPane.showInputDialog("Digite a naturalidade: ");
+    String naturalidade = null;
+    while (naturalidade == null) {
+      naturalidade = JOptionPane.showInputDialog("Digite a naturalidade: ");
     }
-    String naturalidade = naturalidadeAux;
 
-    Hobby hobbyAux =
-        Hobby.valueOf(
-            JOptionPane.showInputDialog(
-                    "Digite o hobby [ARTE, ESPORTE, CINEMA, LIVRO, MÚSICA, CULINÁRIA, GAME,"
-                        + " NENHUM]: ")
-                .toUpperCase());
-    while (hobbyAux == null) {
+    String hobbyAux = null;
+    while (!isHobbyNotNull(hobbyAux)) {
       hobbyAux =
-          Hobby.valueOf(
-              JOptionPane.showInputDialog(
-                      "Digite o hobby [ARTE, ESPORTE, CINEMA, LIVRO, MÚSICA, CULINÁRIA, GAME,"
-                          + " NENHUM]: ")
-                  .toUpperCase());
+          JOptionPane.showInputDialog(
+                  "Digite o hobby [ARTE, ESPORTE, CINEMA, LIVRO, MÚSICA, CULINÁRIA, GAME, NENHUM]:"
+                      + " ")
+              .toUpperCase();
     }
-    Hobby hobby = hobbyAux;
+    Hobby hobby = Hobby.valueOf(hobbyAux);
 
-    EstadoCivil estadoCivilAux =
-        EstadoCivil.valueOf(
-            JOptionPane.showInputDialog(
-                    "Digite o estado civil (SOLTEIRO, CASADO, DIVORCIADO, VIUVO, SEPARADO): ")
-                .toUpperCase());
-    while (estadoCivilAux == null) {
-      EstadoCivil.valueOf(
+    String estadoCivilAux = null;
+    while (!isEstadoCivilNotNull(estadoCivilAux)) {
+      estadoCivilAux =
           JOptionPane.showInputDialog(
                   "Digite o estado civil (SOLTEIRO, CASADO, DIVORCIADO, VIUVO, SEPARADO): ")
-              .toUpperCase());
+              .toUpperCase();
     }
-    EstadoCivil estadoCivil = estadoCivilAux;
+    EstadoCivil estadoCivil = EstadoCivil.valueOf(estadoCivilAux);
 
-    Escolaridade escolaridadeAux =
-        Escolaridade.valueOf(
-            JOptionPane.showInputDialog(
-                    "Digite a escolaridade (FUNDAMENTAL, MEDIO, SUPERIOR, POS_GRADUACAO, NENHUMA):"
-                        + " ")
-                .toUpperCase());
-    while (escolaridadeAux == null) {
-      Escolaridade.valueOf(
+    String escolaridadeAux = null;
+    while (!isEscolaridadeNotNull(escolaridadeAux)) {
+      escolaridadeAux =
           JOptionPane.showInputDialog(
-                  "Digite a escolaridade (FUNDAMENTAL, MEDIO, SUPERIOR, POS_GRADUACAO, NENHUMA):"
-                      + " ")
-              .toUpperCase());
+                  "Digite a escolaridade (FUNDAMENTAL, MEDIO, SUPERIOR, POS_GRADUACAO, NENHUMA): ")
+              .toUpperCase();
     }
-    Escolaridade escolaridade = escolaridadeAux;
+    Escolaridade escolaridade = Escolaridade.valueOf(escolaridadeAux);
 
-    Boolean felizAux =
-        Boolean.parseBoolean(JOptionPane.showInputDialog("Você está feliz? (true/false): "));
-    while (felizAux == null) {
-      felizAux =
-          Boolean.parseBoolean(JOptionPane.showInputDialog("Você está feliz? (true/false): "));
+    String felizAux = null;
+    while (!felizAux.equalsIgnoreCase("true") && !felizAux.equalsIgnoreCase("false")) {
+      felizAux = JOptionPane.showInputDialog("Você está feliz? (true/false): ");
     }
-    boolean feliz = felizAux;
+    boolean feliz = Boolean.parseBoolean(felizAux);
 
-    Moradia moradiaAux =
-        Moradia.valueOf(
-            JOptionPane.showInputDialog(
-                    "Digite o tipo de moradia [COM_FAMILIA, ALUGUEL, CASA_PROPRIA]: ")
-                .toUpperCase());
-    while (moradiaAux == null) {
+    String moradiaAux = null;
+    while (!isMoradiaNotNull(moradiaAux)) {
       moradiaAux =
-          Moradia.valueOf(
-              JOptionPane.showInputDialog(
-                      "Digite o tipo de moradia [COM_FAMILIA, ALUGUEL, CASA_PROPRIA]: ")
-                  .toUpperCase());
+          JOptionPane.showInputDialog(
+                  "Digite o tipo de moradia [COM_FAMILIA, ALUGUEL, CASA_PROPRIA]: ")
+              .toUpperCase();
     }
-    Moradia moradia = moradiaAux;
+    Moradia moradia = Moradia.valueOf(moradiaAux);
 
     Pessoa pessoa =
         new Pessoa(
@@ -244,9 +212,38 @@ public class Main {
             escolaridade,
             feliz,
             moradia);
+
     JOptionPane.showMessageDialog(
         null, pessoa, "Pessoa Cadastrada", JOptionPane.INFORMATION_MESSAGE);
     return pessoa;
+  }
+
+  private static boolean isGeneroNotNull(String genero) {
+    return genero != null;
+  }
+
+  private static boolean isHobbyNotNull(String hobby) {
+    return hobby != null;
+  }
+
+  private static boolean isEstadoCivilNotNull(String estadoCivil) {
+    return estadoCivil != null;
+  }
+
+  private static boolean isEscolaridadeNotNull(String escolaridade) {
+    return escolaridade != null;
+  }
+
+  private static boolean isMoradiaNotNull(String moradia) {
+    return moradia != null;
+  }
+
+  private static boolean isFloatNotNull(String valor) {
+    return valor != null;
+  }
+
+  private static boolean isIntegerNotNull(String valor) {
+    return valor != null;
   }
 
   private static void pesquisarPessoa() {

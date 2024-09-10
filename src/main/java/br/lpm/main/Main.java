@@ -32,6 +32,7 @@ public class Main {
     cadastrarDataset();
 
     Pessoa pessoaConsulta = cadastrarPessoa();
+    dataset.addPessoa(pessoaConsulta);
     JOptionPane.showMessageDialog(
         null, pessoaConsulta, "Pessoa cadastrada para consulta", JOptionPane.INFORMATION_MESSAGE);
 
@@ -39,7 +40,7 @@ public class Main {
     ShowMenu();
   }
 
-  public static void ShowMenu() {
+  private static void ShowMenu() {
     String[] options = {
       "Pesquisar Pessoa",
       "Estatisticas",
@@ -109,7 +110,7 @@ public class Main {
     return qtdePessoasDataset;
   }
 
-  public static Pessoa cadastrarPessoa() {
+  private static Pessoa cadastrarPessoa() {
     String nomeAux = JOptionPane.showInputDialog("Digite seu nome: ");
     while (nomeAux == null) {
       nomeAux = JOptionPane.showInputDialog("Digite seu nome: ");
@@ -248,7 +249,7 @@ public class Main {
     return pessoa;
   }
 
-  public static void pesquisarPessoa() {
+  private static void pesquisarPessoa() {
     String pessoa = JOptionPane.showInputDialog("Digite o nome da pessoa que deseja encontrar: ");
     Pessoa pessoaEncontrada = dataset.getPessoaByName(pessoa);
 
@@ -265,8 +266,7 @@ public class Main {
     JOptionPane.showMessageDialog(null, dataset, "Estatísticas", JOptionPane.INFORMATION_MESSAGE);
   }
 
-  public static void histogramaFormacaoAcadêmica() {
-
+  private static void histogramaFormacaoAcadêmica() {
     Pessoa[] listaPessoas = dataset.getAll();
     Escolaridade[] tipoEscolaridades = Escolaridade.values();
     int[] contEscolaridades = new int[Escolaridade.values().length];
@@ -310,8 +310,7 @@ public class Main {
         null, frameGrafico.getContentPane(), "Histograma", JOptionPane.PLAIN_MESSAGE);
   }
 
-  public static void pieEstadoCivil() {
-
+  private static void pieEstadoCivil() {
     DefaultPieDataset<String> datasetGrafico = new DefaultPieDataset<>();
     datasetGrafico.setValue("Solteiro", dataset.percentEstadoCivil(EstadoCivil.SOLTEIRO));
     datasetGrafico.setValue("Casado", dataset.percentEstadoCivil(EstadoCivil.CASADO));

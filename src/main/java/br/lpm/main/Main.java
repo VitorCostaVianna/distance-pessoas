@@ -90,8 +90,21 @@ public class Main {
     dataset = new Dataset();
     int qtdePessoasDataset = obterQuantidadePessoas();
     for (int i = 0; i < qtdePessoasDataset; i++) {
-      Pessoa newPessoa = cadastrarPessoa();
-      dataset.addPessoa(newPessoa);
+      // Pessoa newPessoa = cadastrarPessoa();
+      Pessoa pessoa1 = new Pessoa("Vitor",
+      LocalDate.parse("14/09/2005", fmt),
+      Genero.MASCULINO,
+      1.70f,
+      73,
+      2000f,
+      "Belo Horizonte",
+      Hobby.GAME,
+      EstadoCivil.SOLTEIRO,
+      Escolaridade.SUPERIOR,
+      true,
+      Moradia.ALUGUEL);
+      dataset.addPessoa(pessoa1);
+      JOptionPane.showMessageDialog(null, pessoa1, null, i);
     }
   }
 
@@ -184,7 +197,7 @@ public class Main {
     Escolaridade escolaridade = Escolaridade.valueOf(escolaridadeAux);
 
     String felizAux = null;
-    while (!felizAux.equalsIgnoreCase("true") && !felizAux.equalsIgnoreCase("false")) {
+    while (felizAux == null) {
       felizAux = JOptionPane.showInputDialog("Você está feliz? (true/false): ");
     }
     boolean feliz = Boolean.parseBoolean(felizAux);

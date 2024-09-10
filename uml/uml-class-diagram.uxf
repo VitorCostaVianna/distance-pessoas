@@ -1,4 +1,4 @@
-<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>610</x><y>230</y><w>260</w><h>250</h></coordinates><panel_attributes>Pessoa::br.lpm.business
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>610</x><y>250</y><w>260</w><h>250</h></coordinates><panel_attributes>Pessoa::br.lpm.business
 --
 -nome: String
 -dataNascimento: LocalDate
@@ -15,7 +15,7 @@
 --
 +toString(): String
 + calculaIdade: int
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1100</x><y>430</y><w>220</w><h>160</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1050</x><y>410</y><w>220</w><h>160</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
 Hobby::br.lpm.business
 --
 +ARTE
@@ -26,7 +26,7 @@ Hobby::br.lpm.business
 +CULINÁRIA
 +GAME
 +NENHUM
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1100</x><y>180</y><w>220</w><h>120</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1050</x><y>150</y><w>220</w><h>120</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
 EstadoCivil::br.lpm.business
 --
 +SOLTEIRO
@@ -34,14 +34,14 @@ EstadoCivil::br.lpm.business
 +VIUVO
 +SEPARADO
 +DIVORCIADO
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1100</x><y>310</y><w>220</w><h>110</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1050</x><y>290</y><w>220</w><h>110</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
 Genero::br.lpm.business
 --
 +FEMININO
 +MASCULINO
 +NAO_BINARIO
 +NAO_RESPONDER
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>910</x><y>0</y><w>210</w><h>170</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>830</x><y>0</y><w>210</w><h>170</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
 Escolaridade::br.lpm.business
 --
 +NENHUMA
@@ -52,13 +52,13 @@ Escolaridade::br.lpm.business
 +CULINÁRIA
 +GAME
 +NENHUM
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1100</x><y>610</y><w>220</w><h>90</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1050</x><y>590</y><w>220</w><h>90</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
 Moradia::br.lpm.business
 --
 +COM_FAMILIA
 +ALUGUEL
 +CASA_PROPRIA
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>160</x><y>130</y><w>340</w><h>430</h></coordinates><panel_attributes>Dataset::br.lpm.business
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>160</x><y>150</y><w>340</w><h>430</h></coordinates><panel_attributes>Dataset::br.lpm.business
 --
 _-&lt;&lt;final&gt;&gt;MAX_PESSOAS: int_
 -pessoas : Pessoa[]
@@ -86,7 +86,7 @@ _-&lt;&lt;final&gt;&gt;MAX_PESSOAS: int_
 +percentMoradia(enum  Moradia): Float
 +modeMoradia(): Moradia
 +percentHobby(): Float
-+percentFeliz(): Float</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>610</x><y>500</y><w>260</w><h>130</h></coordinates><panel_attributes>DistanceMeasure::br.lpm.business
++percentFeliz(): Float</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>610</x><y>520</y><w>260</w><h>130</h></coordinates><panel_attributes>DistanceMeasure::br.lpm.business
 --
 - dataset: Dataset
 -pessoas : Pessoa[]
@@ -95,18 +95,18 @@ _-&lt;&lt;final&gt;&gt;MAX_PESSOAS: int_
 +calcDistance(Pessoa: Pessoa): float
 +calcDistanceVector(Pessoa): Float[]
 +calcDistanceMatrix(): Float[][]
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>490</x><y>530</y><w>140</w><h>40</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>490</x><y>550</y><w>140</w><h>40</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=0,1
-m2=0,1</panel_attributes><additional_attributes>120;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>490</x><y>340</y><w>140</w><h>40</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m2=0,1</panel_attributes><additional_attributes>120;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>490</x><y>360</y><w>140</w><h>40</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=0,n
-m2=0,1</panel_attributes><additional_attributes>120;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>860</x><y>80</y><w>100</w><h>270</h></coordinates><panel_attributes>lt=.&gt;
+m2=0,1</panel_attributes><additional_attributes>120;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>830</x><y>160</y><w>80</w><h>110</h></coordinates><panel_attributes>lt=.&gt;
 &lt;&lt;possui&gt;&gt;
-m1= 0,1</panel_attributes><additional_attributes>10;250;50;10</additional_attributes></element><element><id>Relation</id><coordinates><x>860</x><y>330</y><w>260</w><h>200</h></coordinates><panel_attributes>lt=.&gt;
+m1= 0,1</panel_attributes><additional_attributes>10;90;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>860</x><y>360</y><w>210</w><h>150</h></coordinates><panel_attributes>lt=.&gt;
 &lt;&lt;possui&gt;&gt;
-m1= 0,1</panel_attributes><additional_attributes>10;10;240;180</additional_attributes></element><element><id>Relation</id><coordinates><x>860</x><y>230</y><w>260</w><h>110</h></coordinates><panel_attributes>lt=.&gt;
+m1= 0,1</panel_attributes><additional_attributes>10;10;190;130</additional_attributes></element><element><id>Relation</id><coordinates><x>860</x><y>240</y><w>210</w><h>60</h></coordinates><panel_attributes>lt=.&gt;
 &lt;&lt;possui&gt;&gt;
-m1= 0,1</panel_attributes><additional_attributes>10;90;240;10</additional_attributes></element><element><id>Relation</id><coordinates><x>860</x><y>310</y><w>260</w><h>50</h></coordinates><panel_attributes>lt=.&gt;
+m1= 0,1</panel_attributes><additional_attributes>10;30;190;20</additional_attributes></element><element><id>Relation</id><coordinates><x>860</x><y>310</y><w>210</w><h>50</h></coordinates><panel_attributes>lt=.&gt;
 &lt;&lt;possui&gt;&gt;
-m1= 0,1</panel_attributes><additional_attributes>10;20;240;20</additional_attributes></element><element><id>Relation</id><coordinates><x>860</x><y>340</y><w>260</w><h>370</h></coordinates><panel_attributes>lt=.&gt;
+m1= 0,1</panel_attributes><additional_attributes>10;20;190;20</additional_attributes></element><element><id>Relation</id><coordinates><x>860</x><y>460</y><w>210</w><h>170</h></coordinates><panel_attributes>lt=.&gt;
 &lt;&lt;possui&gt;&gt;
-m1= 0,1</panel_attributes><additional_attributes>10;10;240;350</additional_attributes></element></diagram>
+m1= 0,1</panel_attributes><additional_attributes>10;10;190;150</additional_attributes></element></diagram>

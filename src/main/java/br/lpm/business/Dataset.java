@@ -1,13 +1,18 @@
 package br.lpm.business;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 public class Dataset {
   private Pessoa[] pessoas;
-  private static final int MAX_PESSOAS = 3;
+  private static final int MAX_PESSOAS = 100;
   private int numPessoasVetor;
+  private static DistanceMeasure distanceMeasure;
 
   public Dataset() {
     pessoas = new Pessoa[MAX_PESSOAS];
     this.numPessoasVetor = 0;
+    distanceMeasure = new DistanceMeasure(this);
   }
 
   public void addPessoa(Pessoa pessoa) {
@@ -377,7 +382,7 @@ public class Dataset {
     return ((float) isFeliz / total) * 100;
   }
 
-  protected Float[] normalizeField(String fieldName) {
+  public Float[] normalizeField(String fieldName) {
     Float[] normalizedField = new Float[size()];
 
     if (fieldName.equalsIgnoreCase("Peso")) {
@@ -424,6 +429,139 @@ public class Dataset {
       return normalizedField;
     }
     return null;
+  }
+
+  public Float[] calcDistanceVector(Pessoa pessoa) {
+    if (pessoas == null || pessoa == null) {
+      return new Float[0];
+    }
+
+    int qtdePessoasDiferente = calcQtdePessoasDiferentes(pessoa);
+    Float[] distanceVector = new Float[qtdePessoasDiferente];
+    Pessoa[] pessoasDiferentes = new Pessoa[qtdePessoasDiferente];
+
+    int i = 0;
+    for (Pessoa p : pessoas) {
+      if (!pessoa.equals(p)) {
+        distanceVector[i] = distanceMeasure.calcDistance(pessoa, p);
+        pessoasDiferentes[i] = p;
+        i++;
+      }
+    }
+
+    sortByDistance(distanceVector, pessoasDiferentes);
+
+    return distanceVector;
+  }
+
+  private void sortByDistance(Float[] distanceVector, Pessoa[] pessoasDiferentes) {
+    DistancePessoaPair[] pairs = new DistancePessoaPair[distanceVector.length];
+    for (int i = 0; i < distanceVector.length; i++) {
+      pairs[i] = new DistancePessoaPair(distanceVector[i], pessoasDiferentes[i]);
+    }
+
+    Arrays.sort(pairs, Comparator.comparingDouble(DistancePessoaPair::getDistance));
+
+    for (int i = 0; i < pairs.length; i++) {
+      distanceVector[i] = pairs[i].getDistance();
+      pessoasDiferentes[i] = pairs[i].getPessoa();
+    }
+  }
+
+  private int calcQtdePessoasDiferentes(Pessoa pessoa) {
+    int qtdePessoasDiferente = 0;
+    for (Pessoa p : pessoas) {
+      if (!pessoa.equals(p)) {
+        qtdePessoasDiferente++;
+      }
+    }
+    return qtdePessoasDiferente;
+  }
+
+  public Float[][] calcDistanceMatrix() {
+    int row = size();
+    int column = row;
+    Float[][] matrizDistancias = new Float[row][column];
+    for (int i = 0; i < row; i++) {
+      for (int j = i; j < column; j++) {
+        if (i == j) {
+          matrizDistancias[i][j] = 0f;
+        } else {
+          matrizDistancias[i][j] = distanceMeasure.calcDistance(pessoas[i], pessoas[j]);
+
+          matrizDistancias[j][i] = matrizDistancias[i][j];
+        }
+      }
+    }
+    return matrizDistancias;
+  }
+
+  public Pessoa[] getSimilar(Pessoa pessoa, int n) {
+    if (pessoa == null || n <= 0) {
+      return new Pessoa[0];
+    }
+
+    Float[] distanceVector = calcDistanceVector(pessoa);
+    Pessoa[] pessoasDiferentes = new Pessoa[distanceVector.length];
+    System.arraycopy(pessoas, 0, pessoasDiferentes, 0, distanceVector.length);
+
+    sortByDistance(distanceVector, pessoasDiferentes);
+
+    int numSimilar = Math.min(n, pessoasDiferentes.length);
+    Pessoa[] similarPessoas = new Pessoa[numSimilar];
+    for (int i = 0; i < numSimilar; i++) {
+      similarPessoas[i] = pessoasDiferentes[i];
+    }
+
+    return similarPessoas;
+  }
+
+  private static class DistancePessoaPair {
+    private final Float distance;
+    private final Pessoa pessoa;
+
+    public DistancePessoaPair(Float distance, Pessoa pessoa) {
+      this.distance = distance;
+      this.pessoa = pessoa;
+    }
+
+    public Float getDistance() {
+      return distance;
+    }
+
+    public Pessoa getPessoa() {
+      return pessoa;
+    }
+  }
+
+  private Pessoa foundPessoa(Pessoa pessoa, Float distance, Float[] distanceVector) {
+    int position = 0;
+    int j = 1;
+    for (int i = 0; i < distanceVector.length; i++, j++) {
+      if (distance.equals(distanceVector[i])) {
+        position = i;
+        break;
+      }
+    }
+    if (position >= 0 && position < pessoas.length) {
+      return pessoas[position];
+    }
+    return null;
+  }
+
+  private Float[] ordenaCrescente(Float[] distanceVector) {
+    for (int i = 0; i < distanceVector.length - 1; i++) {
+      for (int j = 0; j < distanceVector.length - 1; j++) {
+
+        if (distanceVector[j] > distanceVector[j + 1]) {
+
+          float mudaVetor = distanceVector[j];
+          distanceVector[j] = distanceVector[j + 1];
+          distanceVector[j + 1] = mudaVetor;
+        }
+      }
+    }
+    return distanceVector;
   }
 
   @Override

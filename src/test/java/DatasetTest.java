@@ -1,19 +1,22 @@
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import br.lpm.business.Dataset;
 import br.lpm.business.Escolaridade;
 import br.lpm.business.EstadoCivil;
+import br.lpm.business.Genero;
 import br.lpm.business.Hobby;
 import br.lpm.business.Moradia;
 import br.lpm.business.Pessoa;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class DatasetTest {
-   DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+  DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
   public static Pessoa pessoa;
   public static Pessoa pessoa2;
   public static Dataset dataset;
@@ -72,7 +75,6 @@ public class DatasetTest {
     pessoaNova.setNome("Joaquim");
 
     dataset.replacePessoa(pessoa, pessoaNova);
-
 
     assertEquals(2, dataset.size(), "Teste se o tamanho permaneceu o mesmo");
 
@@ -169,14 +171,13 @@ public class DatasetTest {
 
   @Test
   void testPercentAdult() {
-    pessoa.setDataDeNascimento(LocalDate.parse("20/07/2002" , fmt));
-    pessoa2.setDataDeNascimento(LocalDate.parse("14/09/2005" , fmt));
+    pessoa.setDataDeNascimento(LocalDate.parse("20/07/2002", fmt));
+    pessoa2.setDataDeNascimento(LocalDate.parse("14/09/2005", fmt));
     assertEquals(100f, dataset.percentAdult(), "Verificando porcentagem de Adultos");
 
-    pessoa.setDataDeNascimento(LocalDate.parse("20/07/2010" , fmt));
-    pessoa2.setDataDeNascimento(LocalDate.parse("14/09/2015" , fmt));
+    pessoa.setDataDeNascimento(LocalDate.parse("20/07/2010", fmt));
+    pessoa2.setDataDeNascimento(LocalDate.parse("14/09/2015", fmt));
     assertEquals(0, dataset.percentAdult(), "Verificando porcntagem sem adultos no vetor");
-
   }
 
   @Test
@@ -224,7 +225,8 @@ public class DatasetTest {
     assertEquals(50f, dataset.percentFeliz(), 1.0d, "Verificando porcentagem Feliz");
 
     pessoa.setFeliz(false);
-    assertEquals(0f, dataset.percentFeliz(), 1.0d, "Verificando porcentagem quando ninguem é Feliz");
+    assertEquals(
+        0f, dataset.percentFeliz(), 1.0d, "Verificando porcentagem quando ninguem é Feliz");
   }
 
   @Test
@@ -249,9 +251,9 @@ public class DatasetTest {
     pessoa.setMoradia(Moradia.ALUGUEL);
     pessoa2.setMoradia(Moradia.ALUGUEL);
     pessoa3.setMoradia(Moradia.COM_FAMILIA);
-    assertEquals(66.6F, dataset.percentMoradia(Moradia.ALUGUEL), 1.0d, "Verificando porcentagem moradia");
+    assertEquals(
+        66.6F, dataset.percentMoradia(Moradia.ALUGUEL), 1.0d, "Verificando porcentagem moradia");
 
-    
     assertEquals(
         0f,
         dataset.percentMoradia(Moradia.CASA_PROPRIA),
@@ -261,5 +263,257 @@ public class DatasetTest {
   @Test
   void testSize() {
     assertEquals(2, dataset.size());
+  }
+
+  @Test
+  void testNormalizeField() {
+    dataset.removeAll();
+    Pessoa pessoa1 =
+        new Pessoa(
+            "Vitor",
+            LocalDate.parse("14/09/2005", fmt),
+            Genero.MASCULINO,
+            1.70f,
+            75,
+            2000f,
+            "Belo Horizonte",
+            Hobby.GAME,
+            EstadoCivil.SOLTEIRO,
+            Escolaridade.SUPERIOR,
+            true,
+            Moradia.ALUGUEL);
+    Pessoa pessoa2 =
+        new Pessoa(
+            "Joaquim",
+            LocalDate.parse("16/09/2005", fmt),
+            Genero.MASCULINO,
+            1.70f,
+            75,
+            2000f,
+            "Belo Horizonte",
+            Hobby.GAME,
+            EstadoCivil.SOLTEIRO,
+            Escolaridade.SUPERIOR,
+            true,
+            Moradia.ALUGUEL);
+    Pessoa pessoa3 =
+        new Pessoa(
+            "Bia",
+            LocalDate.parse("14/09/2002", fmt),
+            Genero.FEMININO,
+            1.60f,
+            60,
+            1000f,
+            "Belo Horizonte",
+            Hobby.ARTE,
+            EstadoCivil.CASADO,
+            Escolaridade.MEDIO,
+            true,
+            Moradia.ALUGUEL);
+    dataset.addPessoa(pessoa1);
+    dataset.addPessoa(pessoa2);
+    dataset.addPessoa(pessoa3);
+
+    Float[] normalizedFieldPeso = dataset.normalizeField("peso");
+    Float[] expectedPesos = {1.0f, 1.0f, 0.0f};
+    assertArrayEquals(expectedPesos, normalizedFieldPeso, "Verificando normalização do peso");
+  }
+
+  @Test
+  void testCalcDistanceMatrix() {
+    dataset.removeAll();
+    Pessoa pessoa1 =
+        new Pessoa(
+            "Vitor",
+            LocalDate.parse("14/09/2005", fmt),
+            Genero.MASCULINO,
+            1.70f,
+            73,
+            2000f,
+            "Belo Horizonte",
+            Hobby.GAME,
+            EstadoCivil.SOLTEIRO,
+            Escolaridade.SUPERIOR,
+            true,
+            Moradia.ALUGUEL);
+    Pessoa pessoa2 =
+        new Pessoa(
+            "Joaquim",
+            LocalDate.parse("16/09/2005", fmt),
+            Genero.MASCULINO,
+            1.70f,
+            73,
+            2000f,
+            "Belo Horizonte",
+            Hobby.GAME,
+            EstadoCivil.SOLTEIRO,
+            Escolaridade.SUPERIOR,
+            true,
+            Moradia.ALUGUEL);
+    Pessoa pessoa3 =
+        new Pessoa(
+            "Bia",
+            LocalDate.parse("14/09/2002", fmt),
+            Genero.FEMININO,
+            1.60f,
+            60,
+            1000f,
+            "Belo Horizonte",
+            Hobby.ARTE,
+            EstadoCivil.CASADO,
+            Escolaridade.MEDIO,
+            true,
+            Moradia.ALUGUEL);
+    dataset.addPessoa(pessoa1);
+    dataset.addPessoa(pessoa2);
+    dataset.addPessoa(pessoa3);
+
+    Float[][] matrizExpect =
+        new Float[][] {
+          {0f, 0f, 0.85f},
+          {0f, 0f, 0.85f},
+          {0.85f, 0.85f, 0f}
+        };
+
+    Float[][] result = dataset.calcDistanceMatrix();
+    float delta = 0.01f;
+    for (int i = 0; i < matrizExpect.length; i++) {
+      for (int j = 0; j < matrizExpect.length; j++) {
+        assertTrue(
+            Math.abs(matrizExpect[i][j] - result[i][j]) < delta,
+            "Verificando matriz de distâncias na linha " + i + "coluna " + j);
+      }
+    }
+  }
+
+  @Test
+  void testCalcDistanceVector() {
+    dataset.removeAll();
+    Pessoa pessoa1 =
+        new Pessoa(
+            "Vitor",
+            LocalDate.parse("14/09/2005", fmt),
+            Genero.MASCULINO,
+            1.70f,
+            73,
+            2000f,
+            "Belo Horizonte",
+            Hobby.GAME,
+            EstadoCivil.SOLTEIRO,
+            Escolaridade.SUPERIOR,
+            true,
+            Moradia.ALUGUEL);
+    Pessoa pessoa2 =
+        new Pessoa(
+            "Joaquim",
+            LocalDate.parse("16/09/2005", fmt),
+            Genero.MASCULINO,
+            1.70f,
+            73,
+            2000f,
+            "Belo Horizonte",
+            Hobby.GAME,
+            EstadoCivil.SOLTEIRO,
+            Escolaridade.SUPERIOR,
+            true,
+            Moradia.ALUGUEL);
+    Pessoa pessoa3 =
+        new Pessoa(
+            "Bia",
+            LocalDate.parse("14/09/2002", fmt),
+            Genero.FEMININO,
+            1.60f,
+            60,
+            1000f,
+            "Belo Horizonte",
+            Hobby.ARTE,
+            EstadoCivil.CASADO,
+            Escolaridade.MEDIO,
+            true,
+            Moradia.ALUGUEL);
+    dataset.addPessoa(pessoa1);
+    dataset.addPessoa(pessoa2);
+    dataset.addPessoa(pessoa3);
+
+    Float[] vectExpect = new Float[] {0f, 0.85f};
+    Float[] result = dataset.calcDistanceVector(pessoa1);
+    float delta = 0.01f;
+
+    for (int i = 0; i < vectExpect.length; i++) {
+      assertTrue(
+          Math.abs(vectExpect[i] - result[i]) < delta,
+          "Verificando vetor de distâncias no índice " + i);
+    }
+  }
+
+  @Test
+  void testGetSimilar() {
+    dataset.removeAll();
+    Pessoa pessoa1 =
+        new Pessoa(
+            "Vitor",
+            LocalDate.parse("14/09/2005", fmt),
+            Genero.MASCULINO,
+            1.70f,
+            73,
+            2000f,
+            "Belo Horizonte",
+            Hobby.GAME,
+            EstadoCivil.SOLTEIRO,
+            Escolaridade.SUPERIOR,
+            true,
+            Moradia.ALUGUEL);
+    Pessoa pessoa2 =
+        new Pessoa(
+            "Joaquim",
+            LocalDate.parse("16/09/2005", fmt),
+            Genero.MASCULINO,
+            1.70f,
+            73,
+            2000f,
+            "Belo Horizonte",
+            Hobby.GAME,
+            EstadoCivil.SOLTEIRO,
+            Escolaridade.SUPERIOR,
+            true,
+            Moradia.ALUGUEL);
+    Pessoa pessoa3 =
+        new Pessoa(
+            "Bia",
+            LocalDate.parse("14/09/2002", fmt),
+            Genero.FEMININO,
+            1.60f,
+            60,
+            1000f,
+            "Belo Horizonte",
+            Hobby.ARTE,
+            EstadoCivil.CASADO,
+            Escolaridade.MEDIO,
+            true,
+            Moradia.ALUGUEL);
+    Pessoa pessoa4 =
+        new Pessoa(
+            "Boulos",
+            LocalDate.parse("14/09/2000", fmt),
+            Genero.MASCULINO,
+            1.90f,
+            90,
+            2000f,
+            "Belo Horizonte",
+            Hobby.ARTE,
+            EstadoCivil.CASADO,
+            Escolaridade.MEDIO,
+            false,
+            Moradia.COM_FAMILIA);
+    dataset.addPessoa(pessoa2);
+    dataset.addPessoa(pessoa3);
+    dataset.addPessoa(pessoa4);
+    dataset.addPessoa(pessoa1);
+
+    Pessoa[] Expectedpessoas = new Pessoa[] {pessoa2, pessoa3, pessoa4};
+    assertEquals(
+        Arrays.asList(Expectedpessoas),
+        Arrays.asList(dataset.getSimilar(pessoa1, 3)),
+        "Verificando vetor de pessoas similares");
   }
 }

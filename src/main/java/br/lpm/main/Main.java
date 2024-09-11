@@ -22,7 +22,7 @@ import org.jfree.data.general.DefaultPieDataset;
 
 public class Main {
 
-  public static Dataset dataset;
+  public static Dataset dataset = new Dataset();
   public static DistanceMeasure distance;
   static DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -36,7 +36,7 @@ public class Main {
     JOptionPane.showMessageDialog(
         null, pessoaConsulta, "Pessoa cadastrada para consulta", JOptionPane.INFORMATION_MESSAGE);
 
-    exibePessoasSimilares(pessoaConsulta, 3);
+    exibePessoasSimilares(pessoaConsulta, 2);
     ShowMenu();
   }
 
@@ -87,53 +87,57 @@ public class Main {
   }
 
   private static void cadastrarDataset() {
-    dataset = new Dataset();
     int qtdePessoasDataset = obterQuantidadePessoas();
-   // for (int i = 0; i < qtdePessoasDataset; i++) {
-      // Pessoa newPessoa = cadastrarPessoa();
-      Pessoa pessoa1 = new Pessoa("Vitor",
-      LocalDate.parse("14/09/2005", fmt),
-      Genero.MASCULINO,
-      1.70f,
-      73,
-      2000f,
-      "Belo Horizonte",
-      Hobby.GAME,
-      EstadoCivil.SOLTEIRO,
-      Escolaridade.SUPERIOR,
-      true,
-      Moradia.ALUGUEL);
-      Pessoa pessoa2 = new Pessoa("Arlindo",
-      LocalDate.parse("19/07/2005", fmt),
-      Genero.MASCULINO,
-      1.80f,
-      73,
-      3000f,
-      "Belo Horizonte",
-      Hobby.ESPORTE,
-      EstadoCivil.SOLTEIRO,
-      Escolaridade.MEDIO,
-      true,
-      Moradia.ALUGUEL);
-      Pessoa pessoa3 = new Pessoa("Joaquim",
-      LocalDate.parse("19/07/2007", fmt),
-      Genero.MASCULINO,
-      1.75f,
-      73,
-      4000f,
-      "Belo Horizonte",
-      Hobby.GAME,
-      EstadoCivil.CASADO,
-      Escolaridade.SUPERIOR,
-      true,
-      Moradia.ALUGUEL);
-      dataset.addPessoa(pessoa1);
-      dataset.addPessoa(pessoa2);
-      dataset.addPessoa(pessoa3);
-      JOptionPane.showMessageDialog(null, pessoa1);
-      JOptionPane.showMessageDialog(null, pessoa2);
-      JOptionPane.showMessageDialog(null, pessoa3);
-  //  }
+    // for (int i = 0; i < qtdePessoasDataset; i++) {
+    // Pessoa newPessoa = cadastrarPessoa();
+    Pessoa pessoa1 =
+        new Pessoa(
+            "Vitor",
+            LocalDate.parse("14/09/2005", fmt),
+            Genero.MASCULINO,
+            1.70f,
+            73,
+            2000f,
+            "Belo Horizonte",
+            Hobby.GAME,
+            EstadoCivil.SOLTEIRO,
+            Escolaridade.SUPERIOR,
+            true,
+            Moradia.ALUGUEL);
+    Pessoa pessoa2 =
+        new Pessoa(
+            "Arlindo",
+            LocalDate.parse("19/07/2007", fmt),
+            Genero.MASCULINO,
+            1.80f,
+            78,
+            3000f,
+            "Belo Horizonte",
+            Hobby.ESPORTE,
+            EstadoCivil.SOLTEIRO,
+            Escolaridade.MEDIO,
+            true,
+            Moradia.ALUGUEL);
+    Pessoa pessoa3 =
+        new Pessoa(
+            "Joaquim",
+            LocalDate.parse("19/07/2006", fmt),
+            Genero.MASCULINO,
+            1.75f,
+            68,
+            4000f,
+            "Belo Horizonte",
+            Hobby.GAME,
+            EstadoCivil.CASADO,
+            Escolaridade.SUPERIOR,
+            true,
+            Moradia.ALUGUEL);
+    dataset.addPessoa(pessoa1);
+    dataset.addPessoa(pessoa2);
+    JOptionPane.showMessageDialog(null, pessoa1);
+    JOptionPane.showMessageDialog(null, pessoa2);
+    JOptionPane.showMessageDialog(null, pessoa3);
+    //  }
   }
 
   private static Integer obterQuantidadePessoas() {
@@ -375,14 +379,21 @@ public class Main {
 
   private static void exibePessoasSimilares(Pessoa pessoa, int n) {
     distance = new DistanceMeasure(dataset);
-    Pessoa[] pessoasSimilares = distance.getSimilar(pessoa, n);
+    Pessoa[] pessoasSimilares = dataset.getSimilar(pessoa, n);
+
+    if (pessoasSimilares == null || pessoasSimilares.length == 0) {
+      JOptionPane.showMessageDialog(
+          null,
+          "Nenhuma pessoa similar encontrada.",
+          "Pessoas Similares",
+          JOptionPane.INFORMATION_MESSAGE);
+      return;
+    }
 
     StringBuilder sb = new StringBuilder();
-    sb.append(pessoasSimilares[0])
-        .append("\n")
-        .append(pessoasSimilares[1])
-        .append("\n")
-        .append(pessoasSimilares[2]);
+    for (int i = 0; i < n; i++) {
+      sb.append(pessoasSimilares[i].toString()).append("\n");
+    }
 
     JOptionPane.showMessageDialog(
         null, sb.toString(), "Pessoas Similares", JOptionPane.INFORMATION_MESSAGE);

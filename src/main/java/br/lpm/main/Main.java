@@ -134,6 +134,7 @@ public class Main {
             Moradia.ALUGUEL);
     dataset.addPessoa(pessoa1);
     dataset.addPessoa(pessoa2);
+    dataset.addPessoa(pessoa3);
     JOptionPane.showMessageDialog(null, pessoa1);
     JOptionPane.showMessageDialog(null, pessoa2);
     JOptionPane.showMessageDialog(null, pessoa3);

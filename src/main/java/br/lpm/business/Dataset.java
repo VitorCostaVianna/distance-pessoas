@@ -497,20 +497,34 @@ public class Dataset {
   }
 
   public Pessoa[] getSimilar(Pessoa pessoa, int n) {
-    if (pessoa == null || n <= 0) {
+    if (pessoas == null || pessoa == null || n <= 0) {
       return new Pessoa[0];
     }
 
-    Float[] distanceVector = calcDistanceVector(pessoa);
-    Pessoa[] pessoasDiferentes = new Pessoa[distanceVector.length];
-    System.arraycopy(pessoas, 0, pessoasDiferentes, 0, distanceVector.length);
+    Float[][] distanceMatrix = calcDistanceMatrix();
+    int indexPessoa = findPessoaIndex(pessoa);
 
-    sortByDistance(distanceVector, pessoasDiferentes);
+    if (indexPessoa == -1) {
+      return new Pessoa[0];
+    }
 
-    int numSimilar = Math.min(n, pessoasDiferentes.length);
+    DistancePessoaPair[] distancePessoaPairs = new DistancePessoaPair[size() -1];
+    int pairIndex = 0;
+
+    for (int i = 0; i < size() -1; i++) {
+      if (i != indexPessoa) {
+        distancePessoaPairs[pairIndex] =
+            new DistancePessoaPair(distanceMatrix[indexPessoa][i], pessoas[i]);
+        pairIndex++;
+      }
+    }
+
+    Arrays.sort(distancePessoaPairs, Comparator.comparingDouble(DistancePessoaPair::getDistance));
+
+    int numSimilar = Math.min(n, distancePessoaPairs.length);
     Pessoa[] similarPessoas = new Pessoa[numSimilar];
     for (int i = 0; i < numSimilar; i++) {
-      similarPessoas[i] = pessoasDiferentes[i];
+      similarPessoas[i] = distancePessoaPairs[i].getPessoa();
     }
 
     return similarPessoas;
@@ -534,19 +548,13 @@ public class Dataset {
     }
   }
 
-  private Pessoa foundPessoa(Pessoa pessoa, Float distance, Float[] distanceVector) {
-    int position = 0;
-    int j = 1;
-    for (int i = 0; i < distanceVector.length; i++, j++) {
-      if (distance.equals(distanceVector[i])) {
-        position = i;
-        break;
+  private int findPessoaIndex(Pessoa pessoa) {
+    for (int i = 0; i < pessoas.length; i++) {
+      if (pessoas[i].equals(pessoa)) {
+        return i;
       }
     }
-    if (position >= 0 && position < pessoas.length) {
-      return pessoas[position];
-    }
-    return null;
+    return -1;
   }
 
   private Float[] ordenaCrescente(Float[] distanceVector) {

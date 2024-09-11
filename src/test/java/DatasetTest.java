@@ -505,8 +505,8 @@ public class DatasetTest {
             Escolaridade.MEDIO,
             false,
             Moradia.COM_FAMILIA);
-    dataset.addPessoa(pessoa2);
     dataset.addPessoa(pessoa3);
+    dataset.addPessoa(pessoa2);
     dataset.addPessoa(pessoa4);
     dataset.addPessoa(pessoa1);
 
